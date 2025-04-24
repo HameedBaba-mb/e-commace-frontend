@@ -23,12 +23,33 @@
                 <!-- <img src="../assets/images/logos/logo-light.svg" alt="" /> -->
               </a>
               <p class="text-center fw-bold card-title mt-5">
-                Update new category
+                Register new product
               </p>
               <vee-form
-                @submit="updateCategoryById"
+                @submit="registerProduct"
                 :validation-schema="formValidation"
               >
+                <div class="mb-3">
+                  <label for="category" class="form-label">Category</label>
+                  <vee-field
+                    as="select"
+                    class="custom-select form-control"
+                    id="category"
+                    aria-describedby="textHelp"
+                    name="categoryId"
+                    v-model="formData.categoryId"
+                  >
+                    <option value="" selected disabled>Select Category</option>
+                    <option
+                      v-for="(category, index) in allCategiries"
+                      :key="index"
+                      :value="category.id"
+                    >
+                      {{ category.title }}
+                    </option>
+                  </vee-field>
+                  <vee-error-message name="categoryId" class="text-danger" />
+                </div>
                 <div class="mb-3">
                   <label for="title" class="form-label">Title</label>
                   <vee-field
@@ -38,7 +59,7 @@
                     aria-describedby="textHelp"
                     placeholder="Title"
                     name="title"
-                    v-model="allCategories.title"
+                    v-model="formData.title"
                   />
                   <vee-error-message name="title" class="text-danger" />
                 </div>
@@ -53,9 +74,22 @@
                     name="description"
                     aria-describedby="emailHelp"
                     placeholder="Description"
-                    v-model="allCategories.description"
+                    v-model="formData.description"
                   />
                   <vee-error-message name="description" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                  <label for="price" class="form-label">Price</label>
+                  <vee-field
+                    type="text"
+                    class="form-control"
+                    id="price"
+                    name="price"
+                    aria-describedby="emailHelp"
+                    placeholder="Price"
+                    v-model="formData.price"
+                  />
+                  <vee-error-message name="price" class="text-danger" />
                 </div>
                 <div class="mb-3">
                   <label for="slug" class="form-label">Slug</label>
@@ -66,24 +100,24 @@
                     name="slug"
                     aria-describedby="emailHelp"
                     placeholder="SLug"
-                    v-model="allCategories.slug"
+                    v-model="formData.slug"
                   />
                   <vee-error-message name="slug" class="text-danger" />
                 </div>
                 <div class="mb-3">
-                  <label for="category_image" class="form-label"
+                  <label for="product_image" class="form-label"
                     >Category Image</label
                   >
                   <vee-field
                     type="file"
                     accept="image/*"
                     class="form-control"
-                    name="category_image"
+                    name="product_image"
                     aria-describedby="emailHelp"
                     placeholder="Category image"
-                    v-model="allCategories.category_image"
+                    v-model="formData.product_image"
                     @change="updatePreview"
-                    id="category_image"
+                    id="product_image"
                   />
                   <vee-error-message name="phone_no" class="text-danger" />
                   <div class="row justify-content-center mt-3">
@@ -99,10 +133,9 @@
                   </div>
                 </div>
                 <button class="btn btn-primary w-100 py-8 fs-4 mb-4">
-                  Update
+                  Register
                 </button>
               </vee-form>
-              <pre>{{ allCategories }}</pre>
             </div>
           </div>
         </div>
@@ -127,58 +160,45 @@ export default {
     const formValidation = yup.object().shape({
       title: yup.string().required("Title is required"),
       description: yup.string().required("Description is required"),
-      category_image: yup.string().required("Category image is required"),
+      product_image: yup.string().required("Category image is required"),
+      price: yup.string().required("Price image is required"),
+      categoryId: yup.string().required("Category is required"),
     });
 
     return {
-      // allCategories: {
-      //   title: "",
-      //   description: "",
-      //   category_image: "",
-      //   slug: "",
-      // },
-      allCategories: {},
+      formData: {
+        title: "",
+        description: "",
+        slug: "",
+        categoryId: "",
+        product_image: "",
+        is_active: true,
+        price: "",
+      },
       imagePreview: "",
+      allCategiries: [],
       formValidation,
     };
   },
   methods: {
-    // updateCategoryById() {
-    //   ApiServices.updateCategoryById(this.categoryId, this.allCategories)
-    //     .then((response) => {
-    //       this.$refs.notify.showMessage(
-    //         "Registration Successful",
-    //         "Category updated have successfully registered.",
-    //         "success"
-    //       );
-    //       setTimeout(() => {
-    //         this.$router.push({ name: "category.records" });
-    //       }, 4000);
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-    // },
-    updateCategoryById() {
-      const formData = new FormData();
-      formData.append("title", this.allCategories.title);
-      formData.append("description", this.allCategories.description);
-      formData.append("slug", this.allCategories.slug);
+    getAllCategory() {
+      ApiServices.getAllCategory()
+        .then((response) => {
+          this.allCategiries = response.data.data;
+        })
+        .catch((error) => console.log(error));
+    },
 
-      // only append category_image if it's a File (new image selected)
-      if (this.allCategories.category_image instanceof File) {
-        formData.append("category_image", this.allCategories.category_image);
-      }
-
-      ApiServices.updateCategoryById(this.categoryId, formData)
+    registerProduct() {
+      ApiServices.registerProduct(this.formData)
         .then((response) => {
           this.$refs.notify.showMessage(
-            "Update Successful",
-            "Category updated successfully.",
+            "Registration Successful",
+            "Product have successfully registered.",
             "success"
           );
           setTimeout(() => {
-            this.$router.push({ name: "category.records" });
+            this.$router.push({ name: "product.records" });
           }, 4000);
         })
         .catch((error) => {
@@ -186,14 +206,24 @@ export default {
         });
     },
     loadImage(event) {
-      document.getElementById("category_image").click();
+      document.getElementById("product_image").click();
     },
+    // updatePreview(e) {
+    //   const files = e.target.files;
+    //   if (!files.length) return;
+
+    //   const reader = new FileReader();
+    //   reader.onload = (event) => {
+    //     this.imagePreview = event.target.result;
+    //   };
+    //   reader.readAsDataURL(files[0]);
+    // },
 
     updatePreview(e) {
       const files = e.target.files;
       if (!files.length) return;
 
-      this.allCategories.category_image = files[0]; // Important: this is the actual File object
+      this.formData.product_image = files[0]; // Important: this is the actual File object
 
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -201,40 +231,9 @@ export default {
       };
       reader.readAsDataURL(files[0]);
     },
-
-    getCatetoryImage() {
-      ApiServices.getCatetoryImage(this.allCategories.category_image, {
-        responseType: "blob",
-      })
-        .then((response) => {
-          // this.imagePreview = response.data;
-          const blob = new Blob([response.data], {
-            type: response.headers["content-type"],
-          });
-          this.imagePreview = URL.createObjectURL(blob);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-    getCategoryById() {
-      ApiServices.getCategoryById(this.categoryId)
-        .then((response) => {
-          this.allCategories = response.data.data;
-          this.getCatetoryImage();
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-  },
-  computed: {
-    categoryId() {
-      return this.$route.params.id;
-    },
   },
   mounted() {
-    this.getCategoryById();
+    this.getAllCategory();
   },
 };
 </script>

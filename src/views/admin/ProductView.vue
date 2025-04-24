@@ -17,27 +17,31 @@
             <div class="d-flex justify-content-between align-items-center">
               <router-link
                 class="btn btn-primary mb-1"
-                :to="{ name: 'register.category' }"
-                >New Category</router-link
+                :to="{ name: 'register.product' }"
+                >New Product</router-link
               >
-              <h5 class="card-title fw-semibold mb-4">Category Records</h5>
+              <h5 class="card-title fw-semibold mb-4">Product Records</h5>
             </div>
             <table class="table table-responsive">
               <thead>
                 <tr>
                   <th scope="col">SN</th>
                   <th scope="col">Title</th>
-                  <th scope="col">Description Name</th>
-                  <th scope="col">Image</th>
+                  <!-- <th scope="col">Description</th> -->
+                  <th scope="col">Slud</th>
+                  <th scope="col">Availability</th>
+                  <th scope="col">Category</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(category, index) in allCategiries" :key="index">
+                <tr v-for="(product, index) in allProducts" :key="index">
                   <th scope="row">{{ index + 1 }}</th>
-                  <td>{{ category.title }}</td>
-                  <td>{{ category.description }}</td>
-                  <td>{{ category.category_image }}</td>
+                  <td>{{ product.title }}</td>
+                  <td>{{ product.slug }}</td>
+                  <td>{{ product.is_active }}</td>
+                  <td>{{ product.Category.title }}</td>
+                  <!-- <td class="text-capitalize">{{ product.user_status }}</td> -->
                   <td>
                     <div class="dropdown ms-auto">
                       <button
@@ -53,8 +57,8 @@
                           <router-link
                             class="dropdown-item"
                             :to="{
-                              name: 'update.category',
-                              params: { id: category.id },
+                              name: 'update.product',
+                              params: { id: product.id },
                             }"
                             >Update</router-link
                           >
@@ -62,7 +66,7 @@
                         <li>
                           <button
                             class="dropdown-item"
-                            @click="getCategoryToDelete(category.id)"
+                            @click="getproductToDelete(product.id)"
                           >
                             Delete
                           </button>
@@ -99,17 +103,17 @@
         </div>
         <div class="modal-body text-center">
           <p class="alert alert-danger">
-            Are you sure you want delete this category
+            Are you sure you want delete this product
           </p>
           <p class="fw-bold">
-            {{ categoryToDelete.first_name + " " + categoryToDelete.last_name }}
+            {{ productToDelete.title }}
           </p>
           <button class="btn btn-primary me-3" @click="closeDeleteModal">
             Close
           </button>
           <button
             class="btn btn-danger"
-            @click="deleteCategory(this.categoryToDelete.id)"
+            @click="deleteProductById(this.productToDelete.id)"
           >
             Delete
           </button>
@@ -131,24 +135,24 @@ export default {
   },
   data() {
     return {
-      allCategiries: [],
+      allProducts: [],
       deleteModalInstance: null,
-      categoryToDelete: {},
+      productToDelete: {},
     };
   },
   methods: {
-    getAllCategory() {
-      ApiServices.getAllCategory()
+    getAllProducts() {
+      ApiServices.getAllProducts()
         .then((response) => {
-          this.allCategiries = response.data.data;
+          this.allProducts = response.data.data;
         })
         .catch((error) => console.log(error));
     },
-    deleteCategory(id) {
-      ApiServices.deleteCategoryById(id)
+    deleteProductById(id) {
+      ApiServices.deleteProductById(id)
         .then((response) => {
           this.closeDeleteModal();
-          this.getAllCategory();
+          this.getAllProducts();
         })
         .catch((error) => console.log(error));
     },
@@ -165,20 +169,18 @@ export default {
       this.deleteModalInstance.hide();
     },
 
-    getCategoryToDelete(id) {
-      this.categoryToDelete = this.allCategiries.find(
-        (category) => category.id === id
-      );
+    getproductToDelete(id) {
+      this.productToDelete = this.allProducts.find((admin) => admin.id === id);
       if (id) {
         this.openDeleteModal();
       }
     },
   },
   mounted() {
-    this.getAllCategory();
+    this.getAllProducts();
   },
 };
 </script>
-
-<style lang="scss" scoped>
+    
+    <style lang="scss" scoped>
 </style>

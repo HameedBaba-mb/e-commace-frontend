@@ -1,3 +1,4 @@
+import { get } from "store";
 import apiClient from "./apiClient";
 
 export default {
@@ -24,5 +25,52 @@ export default {
   },
   deleteUser(id) {
     return apiClient.delete("/delete-user/" + id);
+  },
+  getAllCategory() {
+    return apiClient.get("/get-all-categories");
+  },
+  registerCatogory(data) {
+    return apiClient.post("/register-category", data);
+  },
+  getCategoryById(id) {
+    return apiClient.get("/get-category/" + id);
+  },
+  updateCategoryById(id, data) {
+    return apiClient.put("/update-category/" + id, data);
+  },
+  deleteCategoryById(id) {
+    return apiClient.delete("/delete-category/" + id);
+  },
+  registerProduct(data) {
+    return apiClient.post("/register-product", data);
+  },
+  getAllProducts() {
+    return apiClient.get("/get-all-products");
+  },
+  getProductById(id) {
+    return apiClient.get("/get-product/" + id);
+  },
+  updateProductById(id, data) {
+    return apiClient.put("/update-product/" + id, data);
+  },
+  deleteProductById(id) {
+    return apiClient.delete("/delete-product/" + id);
+  },
+
+  getAllOrders() {
+    return apiClient.get("/get-all-orders");
+  },
+
+  // images api
+
+  getCatetoryImage(image_name) {
+    return apiClient.get("/uploads/categories/" + image_name, {
+      responseType: "blob",
+    });
+  },
+  getProductImage(image_name) {
+    return apiClient.get("/uploads/products/" + image_name, {
+      responseType: "blob",
+    });
   },
 };

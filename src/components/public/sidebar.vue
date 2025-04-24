@@ -34,7 +34,11 @@
             </router-link>
           </li>
           <li class="sidebar-item">
-            <router-link class="sidebar-link" :to="{name:'category.records'}" aria-expanded="false">
+            <router-link
+              class="sidebar-link"
+              :to="{ name: 'category.records' }"
+              aria-expanded="false"
+            >
               <span>
                 <i class="fa fa-briefcase" aria-hidden="true"></i>
               </span>
@@ -42,20 +46,28 @@
             </router-link>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" href="./index.html" aria-expanded="false">
+            <router-link
+              class="sidebar-link"
+              :to="{ name: 'product.records' }"
+              aria-expanded="false"
+            >
               <span>
                 <i class="fa fa-tag" aria-hidden="true"></i>
               </span>
               <span class="hide-menu">Products</span>
-            </a>
+            </router-link>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" href="./index.html" aria-expanded="false">
+            <router-link
+              class="sidebar-link"
+              :to="{ name: 'order.records' }"
+              aria-expanded="false"
+            >
               <span>
                 <i class="fa fa-truck" aria-hidden="true"></i>
               </span>
               <span class="hide-menu">Orders</span>
-            </a>
+            </router-link>
           </li>
           <li class="sidebar-item">
             <router-link

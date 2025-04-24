@@ -118,6 +118,56 @@ const router = createRouter({
           /*webpackChunkName : "New-Client-Registration-Page" */ "../views/admin/CategoryView.vue"
         ),
     },
+    {
+      path: "/register-category",
+      name: "register.category",
+      component: () =>
+        import(
+          /*webpackChunkName : "New-Client-Registration-Page" */ "../views/admin/categories/RegisterCategory.vue"
+        ),
+    },
+    {
+      path: "/update-category/:id",
+      name: "update.category",
+      component: () =>
+        import(
+          /*webpackChunkName : "New-Client-Registration-Page" */ "../views/admin/categories/UpdateCategory.vue"
+        ),
+    },
+
+    {
+      path: "/product-records",
+      name: "product.records",
+      component: () =>
+        import(
+          /*webpackChunkName : "New-Client-Registration-Page" */ "../views/admin/ProductView.vue"
+        ),
+    },
+    {
+      path: "/register-product",
+      name: "register.product",
+      component: () =>
+        import(
+          /*webpackChunkName : "New-Client-Registration-Page" */ "../views/admin/products/RegisterProduct.vue"
+        ),
+    },
+    {
+      path: "/update-product/:id",
+      name: "update.product",
+      component: () =>
+        import(
+          /*webpackChunkName : "New-Client-Registration-Page" */ "../views/admin/products/UpdateProduct.vue"
+        ),
+    },
+
+    {
+      path: "/order-records",
+      name: "order.records",
+      component: () =>
+        import(
+          /*webpackChunkName : "New-Client-Registration-Page" */ "../views/admin/OrderView.vue"
+        ),
+    },
 
     // {
     //   path: "/:catchAll(.*)",

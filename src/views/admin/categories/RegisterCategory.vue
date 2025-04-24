@@ -23,97 +23,77 @@
                 <!-- <img src="../assets/images/logos/logo-light.svg" alt="" /> -->
               </a>
               <p class="text-center fw-bold card-title mt-5">
-                Register new admin
+                Register new category
               </p>
               <vee-form
-                @submit="registerUser"
+                @submit="registerCatogory"
                 :validation-schema="formValidation"
               >
                 <div class="mb-3">
-                  <label for="first_name" class="form-label">First Name</label>
+                  <label for="title" class="form-label">Title</label>
                   <vee-field
                     type="text"
                     class="form-control"
-                    id="first_name"
+                    id="title"
                     aria-describedby="textHelp"
-                    placeholder="First Name"
-                    name="first_name"
-                    v-model="formData.first_name"
+                    placeholder="Title"
+                    name="title"
+                    v-model="formData.title"
                   />
-                  <vee-error-message name="first_name" class="text-danger" />
+                  <vee-error-message name="title" class="text-danger" />
                 </div>
                 <div class="mb-3">
-                  <label for="last_name" class="form-label">Last Name</label>
-                  <vee-field
-                    type="email"
-                    class="form-control"
-                    id="last_name"
-                    name="last_name"
-                    aria-describedby="emailHelp"
-                    placeholder="Last Name"
-                    v-model="formData.last_name"
-                  />
-                  <vee-error-message name="last_name" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                  <label for="phone_no" class="form-label">Phone Number</label>
-                  <vee-field
-                    type="text"
-                    class="form-control"
-                    id="phone_no"
-                    name="phone_no"
-                    aria-describedby="emailHelp"
-                    placeholder="Phone Number"
-                    v-model="formData.phone_no"
-                  />
-                  <vee-error-message name="phone_no" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                  <label for="email_address" class="form-label"
-                    >Email Address</label
+                  <label for="description" class="form-label"
+                    >Description</label
                   >
                   <vee-field
                     type="email"
                     class="form-control"
-                    id="email_address"
-                    name="email"
+                    id="description"
+                    name="description"
                     aria-describedby="emailHelp"
-                    placeholder="Email Address"
-                    v-model="formData.email"
+                    placeholder="Description"
+                    v-model="formData.description"
                   />
-                  <vee-error-message name="email" class="text-danger" />
+                  <vee-error-message name="description" class="text-danger" />
                 </div>
-                <div class="row">
-                  <div class="col col-lg-6 col-md-6 col-xxl-6">
-                    <div class="mb-4">
-                      <label for="password" class="form-label">Password</label>
-                      <vee-field
-                        type="password"
-                        class="form-control"
-                        id="password"
-                        name="password"
-                        placeholder="Password"
-                        v-model="formData.password"
-                      />
-                      <vee-error-message name="password" class="text-danger" />
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-xxl-6">
-                    <div class="mb-4">
-                      <label for="confirm_password" class="form-label"
-                        >Confirm Password</label
-                      >
-                      <vee-field
-                        type="password"
-                        class="form-control"
-                        id="confirm_password"
-                        name="confirm_password"
-                        placeholder="Confirm Password"
-                        v-model="formData.confirm_password"
-                      />
-                      <vee-error-message
-                        name="confirm_password"
-                        class="text-danger"
+                <div class="mb-3">
+                  <label for="slug" class="form-label">Slug</label>
+                  <vee-field
+                    type="email"
+                    class="form-control"
+                    id="slug"
+                    name="slug"
+                    aria-describedby="emailHelp"
+                    placeholder="SLug"
+                    v-model="formData.slug"
+                  />
+                  <vee-error-message name="slug" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                  <label for="category_image" class="form-label"
+                    >Category Image</label
+                  >
+                  <vee-field
+                    type="file"
+                    accept="image/*"
+                    class="form-control"
+                    name="category_image"
+                    aria-describedby="emailHelp"
+                    placeholder="Category image"
+                    v-model="formData.category_image"
+                    @change="updatePreview"
+                    id="category_image"
+                  />
+                  <vee-error-message name="phone_no" class="text-danger" />
+                  <div class="row justify-content-center mt-3">
+                    <div class="cat-img-wrapper" v-if="imagePreview">
+                      <img
+                        id="benImage"
+                        alt="Preview"
+                        :src="imagePreview"
+                        v-if="imagePreview"
+                        class="img-fluid mt-3 cat-img"
                       />
                     </div>
                   </div>
@@ -131,10 +111,10 @@
 </template>
   
   <script>
-import headerbar from "../../../../components/public/headerbar.vue";
-import Notification from "../../../../components/public/Notification.vue";
-import sidebar from "../../../../components/public/sidebar.vue";
-import ApiServices from "../../../../services/ApiServices";
+import headerbar from "../../../components/public/headerbar.vue";
+import Notification from "../../../components/public/Notification.vue";
+import sidebar from "../../../components/public/sidebar.vue";
+import ApiServices from "../../../services/ApiServices";
 import * as yup from "yup";
 export default {
   components: {
@@ -144,60 +124,84 @@ export default {
   },
   data() {
     const formValidation = yup.object().shape({
-      first_name: yup.string().required("First is required"),
-      last_name: yup.string().required("Last is required"),
-      phone_no: yup
-        .string()
-        .required("Phone number is required")
-        .matches(this.mobileNumberRegEx(), "Phone Number is not valid"),
-      email: yup
-        .string()
-        .required("Email address is required")
-        .matches(this.emailRegEx(), "Email Address is not valid"),
-      password: yup
-        .string()
-        .required("Password is required")
-        .min(8, "Password must be at least 8 characters"),
-      confirm_password: yup
-        .string()
-        .required("Confirm password is required")
-        .min(8, "Password must be at least 8 characters")
-        .oneOf([yup.ref("password"), null], "Passwords must match"),
+      title: yup.string().required("Title is required"),
+      description: yup.string().required("Description is required"),
+      category_image: yup.string().required("Category image is required"),
     });
 
     return {
       formData: {
-        first_name: "",
-        last_name: "",
-        phone_no: "",
-        email: "",
-        password: "",
-        confirm_password: "",
-        user_status: "admin",
+        title: "",
+        description: "",
+        category_image: "",
+        slug: "",
       },
+      imagePreview: "",
       formValidation,
     };
   },
   methods: {
-    registerUser() {
-      ApiServices.registerUser(this.formData)
+    registerCatogory() {
+      ApiServices.registerCatogory(this.formData)
         .then((response) => {
           this.$refs.notify.showMessage(
             "Registration Successful",
-            "Admin have successfully registered.",
+            "Category have successfully registered.",
             "success"
           );
           setTimeout(() => {
-            this.$router.push({ name: "admins.records" });
+            this.$router.push({ name: "category.records" });
           }, 4000);
         })
         .catch((error) => {
           console.error(error);
         });
     },
+    loadImage(event) {
+      document.getElementById("category_image").click();
+    },
+    // updatePreview(e) {
+    //   const files = e.target.files;
+    //   if (!files.length) return;
+
+    //   const reader = new FileReader();
+    //   reader.onload = (event) => {
+    //     this.imagePreview = event.target.result;
+    //   };
+    //   reader.readAsDataURL(files[0]);
+    // },
+
+    updatePreview(e) {
+      const files = e.target.files;
+      if (!files.length) return;
+
+      this.formData.category_image = files[0]; // Important: this is the actual File object
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        this.imagePreview = event.target.result;
+      };
+      reader.readAsDataURL(files[0]);
+    },
   },
 };
 </script>
   
-  <style lang="scss" scoped>
+  <style lang="css" scoped>
+.cat-img-wrapper {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: -0px;
+  background: transparent;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.cat-img {
+  width: 100% !important;
+}
 </style>
