@@ -30,7 +30,11 @@ export default {
     return apiClient.get("/get-all-categories");
   },
   registerCatogory(data) {
-    return apiClient.post("/register-category", data);
+    return apiClient.post("/register-category", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
   getCategoryById(id) {
     return apiClient.get("/get-category/" + id);
@@ -42,7 +46,11 @@ export default {
     return apiClient.delete("/delete-category/" + id);
   },
   registerProduct(data) {
-    return apiClient.post("/register-product", data);
+    return apiClient.post("/register-product", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
   getAllProducts() {
     return apiClient.get("/get-all-products");
@@ -56,9 +64,25 @@ export default {
   deleteProductById(id) {
     return apiClient.delete("/delete-product/" + id);
   },
-
   getAllOrders() {
     return apiClient.get("/get-all-orders");
+  },
+  getProductByCategoryId(id) {
+    return apiClient.get("/get-product-by-category/" + id);
+  },
+
+  addToCart(data) {
+    return apiClient.post("/register-cart", data);
+  },
+  getClientCart(userId) {
+    return apiClient.get("/client-carts/" + userId);
+  },
+
+  registerOrder(data) {
+    return apiClient.post("/register-order", data);
+  },
+  getClientOrders(userId) {
+    return apiClient.get("/client-orders/" + userId);
   },
 
   // images api

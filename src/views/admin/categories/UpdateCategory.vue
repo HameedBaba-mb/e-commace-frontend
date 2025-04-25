@@ -102,7 +102,6 @@
                   Update
                 </button>
               </vee-form>
-              <pre>{{ allCategories }}</pre>
             </div>
           </div>
         </div>

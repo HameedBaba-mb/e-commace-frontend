@@ -23,8 +23,7 @@
                 <!-- <img src="../assets/images/logos/logo-light.svg" alt="" /> -->
               </a>
               <p class="text-center fw-bold card-title mt-5">
-                Update new category
-              </p>
+                Update  product              </p>
               <vee-form
                 @submit="updateProductById"
                 :validation-schema="formValidation"

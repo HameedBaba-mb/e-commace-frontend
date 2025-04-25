@@ -6,7 +6,8 @@
         <div class="col-lg-6 mt-5">
           <div class="acc_text">
             <h3>Welcome back</h3>
-            <h5>Abdulhamid Muhammad</h5>
+            <!-- <h5>Abdulhamid Muhammad</h5> -->
+            <h5>{{ userName.first_name + " " + userName.last_name }}</h5>
           </div>
         </div>
         <div class="col-lg-4 mt-auto">
@@ -36,6 +37,14 @@ export default {
     ClientCard,
   },
   name: "DashboardBanner",
+  data() {
+    return {
+      userName: "",
+    };
+  },
+  mounted() {
+    this.userName = JSON.parse(localStorage.getItem("e_commace_active_user"));
+  },
 };
 </script>
 

@@ -27,6 +27,14 @@ const router = createRouter({
         ),
     },
     {
+      path: "/client/categories/procucts/:id",
+      name: "client.categories.products",
+      component: () =>
+        import(
+          /*webpackChunkName : "Clien-Dashboard-Page" */ "../views/client/ProductView.vue"
+        ),
+    },
+    {
       path: "/client/my-order",
       name: "client.my-order",
       component: () =>

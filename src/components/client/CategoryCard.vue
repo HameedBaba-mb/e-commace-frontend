@@ -1,20 +1,31 @@
 <template>
   <div class="card overflow-hidden hover-img border">
     <div class="position-relative">
-        <img
-          src="../../assets/images/blog/blog-img3.jpg"
-          class="card-img-top"
-          alt="matdash-img"
-        />
+      <img
+        v-if="img"
+        :src="img"
+        class="card-img-top card-img"
+        alt="matdash-img"
+      />
+      <img
+        v-else
+        src="../../assets/images/blog/blog-img2.jpg"
+        class="card-img-top card-img"
+        alt="matdash-img"
+      />
     </div>
     <div class="card-body p-3">
-      <span class="badge text-bg-light  lh-sm mt-3 ">{{ title }}</span>
-      <span class="d-block my-4 fs-5 text-dark fw-semibold"
-        >{{ description }}</span
-      >
-      <button class="btn btn-primary  py-2 fw-semibold" style="border-radius: 5px;">
-        View Product
-      </button>
+      <span class="badge text-bg-light lh-sm mt-3">{{ title }}</span>
+      <p class="d-block my-4 text-dark">
+        {{ description ? description.substring(0, 100) : "" }}
+      </p>
+
+
+
+      <slot name="card-content">
+        <!-- modal content  -->
+      </slot>
+     
     </div>
   </div>
 </template>
@@ -33,6 +44,10 @@ export default {
       default: "lere ipsum dolor sit amet, consectetur adipiscing elit.",
       required: true,
     },
+    img: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {};
@@ -41,5 +56,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
+.card-img {
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+}
 </style>

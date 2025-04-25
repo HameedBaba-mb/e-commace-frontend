@@ -198,7 +198,7 @@ export default {
             "success"
           );
           setTimeout(() => {
-            this.$router.push({ name: "product.records" });
+            this.$router.push({ name: "client.my-order" });
           }, 4000);
         })
         .catch((error) => {

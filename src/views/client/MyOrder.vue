@@ -16,7 +16,7 @@
               <hr />
               <table class="table">
                 <thead>
-                  <tr>
+                  <tr v-for="(order, index) in allOrders" :key="index">
                     <th scope="col">#</th>
                     <th scope="col">First</th>
                     <th scope="col">Last</th>
@@ -44,6 +44,7 @@
                   </tr>
                 </tbody>
               </table>
+              <pre>{{ allOrders }}</pre>
             </div>
           </div>
         </div>
@@ -54,12 +55,35 @@
   <script>
   import DashboardBanner from "../../components/client/DashboardBanner.vue";
   import ClientCard from "../../components/client/ClientCard.vue";
+import ApiServices from "../../services/ApiServices";
   export default {
     components: {
       DashboardBanner,
       ClientCard
     },
     name: "ClientDashboard",
+    data() {
+      return {
+        allOrders: []
+      }
+    },
+    methods: {
+      getClientOrders() {
+      ApiServices.getClientOrders(this.userId)
+        .then((response) => {
+          this.allOrders = response.data.data;
+        })
+        .catch((error) => console.log(error));
+    }
+    },
+    computed: {
+      userId() {
+        return JSON.parse(localStorage.getItem("e_commace_active_user")).userId;
+      }
+    },
+    mounted() {
+      this.getClientOrders();
+    }
   };
   </script>
   

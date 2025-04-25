@@ -19,7 +19,7 @@
             <li class="nav-item">
               <!-- <a class="nav-link active" aria-current="page" href="#">Home</a> -->
               <router-link
-                class="nav-link active"
+                class="nav-link active mb-1 ps-1"
                 :to="{ name: 'client.dashboard' }"
                 aria-current="page"
                 >Dashboard</router-link
@@ -28,7 +28,7 @@
             <li class="nav-item">
               <!-- <a class="nav-link" href="#">Categories</a> -->
               <router-link
-                class="nav-link active"
+                class="nav-link active mb-1 ps-1"
                 :to="{ name: 'client.categories' }"
                 aria-current="page"
                 >Categories</router-link
@@ -37,7 +37,7 @@
 
             <li class="nav-item">
               <router-link
-                class="nav-link active"
+                class="nav-link active mb-1 ps-1"
                 :to="{ name: 'client.my-catrs' }"
                 aria-current="page"
                 >My Cart</router-link
@@ -45,7 +45,7 @@
             </li>
             <li class="nav-item">
               <router-link
-                class="nav-link active"
+                class="nav-link active mb-1 ps-1"
                 :to="{ name: 'client.my-order' }"
                 aria-current="page"
                 >My Oders</router-link
@@ -98,10 +98,9 @@ export default {};
   color: #2142cc !important;
   border-radius: 5px;
   font-weight: 700;
-  transition: none
-
+  transition: none;
 }
-.nav-link{
+.nav-link {
   margin-right: 5px;
 }
 </style>
