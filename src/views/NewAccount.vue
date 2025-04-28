@@ -17,12 +17,11 @@
           <div class="col-md-12 col-lg-8 col-xxl-5 col-sm-12 col-xxs-6">
             <div class="card mb-0">
               <div class="card-body">
-                <a
-                  href="./index.html"
-                  class="text-nowrap logo-img text-center d-block py-3 w-100"
+                <p
+                  class="text-center m mb-3 fs-6 fw-bold text-dark mb-0 d-none d-sm-block"
                 >
-                  <img src="../assets/images/logos/logo-light.svg" alt="" />
-                </a>
+                  Campus Store
+                </p>
                 <p class="text-center">Register new account</p>
                 <vee-form
                   @submit="registerClient"
