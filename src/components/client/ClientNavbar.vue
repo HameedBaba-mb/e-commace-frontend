@@ -63,7 +63,11 @@
                 Actions
               </button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Logout</a></li>
+                <li>
+                  <router-link class="dropdown-item" :to="{ name: 'login' }"
+                    >Logout</router-link
+                  >
+                </li>
                 <li>
                   <a class="dropdown-item" href="#">Change Password</a>
                 </li>
