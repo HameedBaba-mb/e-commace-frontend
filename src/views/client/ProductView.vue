@@ -9,11 +9,25 @@
       </template>
     </dashboard-banner>
 
+  
+
     <div class="container-lg">
       <div class="card">
         <div class="card-body client-border">
           <div class="row">
+            <!-- Loading Spinner -->
+            <div v-if="isLoading" class="text-center">
+              <i class="fa fa-spinner fa-spin fa-2x"></i>
+            </div>
+
+            <!-- No Products Found -->
+            <div v-else-if="allProdcuts.length === 0" class="text-center">
+              <p>No products available.</p>
+            </div>
+
+            <!-- Product Cards -->
             <div
+              v-else
               class="col-lg-3 col-md-4 col-sm-6"
               v-for="(product, index) in allProdcuts"
               :key="index"
@@ -25,7 +39,7 @@
               >
                 <template #card-content>
                   <button
-                    @click="addToCart(this.userId, product.id)"
+                    @click="addToCart(userId, product.id)"
                     class="btn btn-sm btn-dark py-2 fw-semibold"
                   >
                     Add to Cart
@@ -59,10 +73,12 @@ export default {
       allProdcuts: [],
       imagePreview: "",
       userId: "",
+      isLoading: false,
     };
   },
   methods: {
     getProductByCategoryId() {
+      this.isLoading = true;
       ApiServices.getProductByCategoryId(this.categoryId)
         .then(async (response) => {
           const categories = response.data.data;
@@ -88,7 +104,10 @@ export default {
 
           this.allProdcuts = categoriesWithImages;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
 
     loadImage(event) {

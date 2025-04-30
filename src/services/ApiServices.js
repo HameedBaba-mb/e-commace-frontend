@@ -70,6 +70,15 @@ export default {
   getProductByCategoryId(id) {
     return apiClient.get("/get-product-by-category/" + id);
   },
+  getClientOrdersMatrix(userId) {
+    return apiClient.get("/client-orders-matrix/" + userId);
+  },
+  getClientOrdersMatrix(userId) {
+    return apiClient.get("/client-orders-matrix/" + userId);
+  },
+  getClientRecentOrders(id) {
+    return apiClient.get("/client-recent-orders/" + id);
+  },
 
   addToCart(data) {
     return apiClient.post("/register-cart", data);
@@ -83,6 +92,10 @@ export default {
   },
   getClientOrders(userId) {
     return apiClient.get("/client-orders/" + userId);
+  },
+
+  deleteCart(id){
+    return apiClient.delete("/delete-cart/" + id);
   },
 
   // images api

@@ -30,28 +30,6 @@
                   <td>{{ cart.Product.title }}</td>
                   <td>{{ cart.Product.price }}</td>
                   <td>
-                    <!-- <div class="dropdown ms-auto">
-                      <button
-                        class="btn btn-sm btn-primary dropdown-toggles border"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style="border-radius: 5px"
-                      >
-                        <i class="fa fa-ellipsis-h"></i>
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Remove</a></li>
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modal"
-                            href="#"
-                            >Make Order</a
-                          >
-                        </li>
-                      </ul>
-                    </div> -->
                     <div class="dropdown ms-auto">
                       <button
                         class="btn btn-sm btn-primary dropdown-toggles border"
@@ -138,7 +116,6 @@
             >
               {{ quentyError }}
             </p>
-            <pre>{{ selectedProduct }}</pre>
           </div>
         </div>
         <div class="modal-footer">
@@ -177,6 +154,7 @@ export default {
       selectedProduct: {},
       modalInstance: null,
       quentyError: "",
+      productToDelete: {},
     };
   },
   methods: {
@@ -187,6 +165,14 @@ export default {
         })
         .catch((error) => console.log(error));
     },
+    deleteCart() {
+      ApiServices.deleteCart(this.userId)
+        .then((response) => {
+          this.allCarts = response.data.data;
+        })
+        .catch((error) => console.log(error));
+    },
+
     registerOrder() {
       if (this.quantity <= 0) {
         this.quentyError = "Please enter a valid quantity.";
@@ -201,8 +187,8 @@ export default {
         productId: this.selectedProduct.productId,
         item_quentity: Number(this.quantity),
         total_amount: Number(this.amount?.replace(/[^0-9.]/g, "")) || 0,
-        payment_status: "Pending",
-        order_status: "Pending",
+        payment_status: "unpaid",
+        order_status: "pending",
       };
 
       ApiServices.registerOrder(formData)
@@ -214,7 +200,7 @@ export default {
             "success"
           );
           // setTimeout(() => {
-            // this.$router.push({ name: "orders.records" });
+          // this.$router.push({ name: "orders.records" });
           // }, 4000);
         })
         .catch((error) => {
@@ -225,6 +211,14 @@ export default {
       this.allCarts.forEach((cart) => {
         if (cart.Product.id === productId) {
           this.selectedProduct = cart;
+          this.openModal();
+        }
+      });
+    },
+    findProductToDelete(productId) {
+      this.allCarts.forEach((cart) => {
+        if (cart.Product.id === productId) {
+          this.productToDelete = cart;
           this.openModal();
         }
       });

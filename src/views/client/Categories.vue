@@ -10,11 +10,60 @@
 
     <div class="row"></div>
 
+    <!-- <div class="container-lg">
+      <div class="card">
+        <div class="card-body client-border">
+          <div class="row">
+            <div v-if="isLoading">
+              <i class="fa fa-spinner fa-spin fa-2x"></i>
+            </div>
+            <div
+            v-if="!isLoading && allCategiries.length === 0"
+              class="col-lg-3 col-md-4 col-sm-6"
+              v-for="(category, index) in allCategiries"
+              :key="index"
+            >
+              <CategoryCard
+                :description="category.description"
+                :title="category.title"
+                :img="category.imageUrl"
+                :prodId="category.id"
+              >
+                <template #card-content>
+                  <router-link
+                    class="btn btn-primary py-2 fw-semibold"
+                    style="border-radius: 5px"
+                    :to="{
+                      name: 'client.categories.products',
+                      params: { id: category.id },
+                    }"
+                  >
+                    View Product
+                  </router-link>
+                </template>
+              </CategoryCard>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
     <div class="container-lg">
       <div class="card">
         <div class="card-body client-border">
           <div class="row">
+            <!-- Loading Spinner -->
+            <div v-if="isLoading" class="text-center">
+              <i class="fa fa-spinner fa-spin fa-2x"></i>
+            </div>
+
+            <!-- No Categories Found -->
+            <div v-else-if="allCategiries.length === 0" class="text-center">
+              <p>No categories available.</p>
+            </div>
+
+            <!-- Category Cards -->
             <div
+              v-else
               class="col-lg-3 col-md-4 col-sm-6"
               v-for="(category, index) in allCategiries"
               :key="index"
@@ -51,18 +100,20 @@ import DashboardBanner from "../../components/client/DashboardBanner.vue";
 import ClientCard from "../../components/client/ClientCard.vue";
 import CategoryCard from "../../components/client/CategoryCard.vue";
 import ApiServices from "../../services/ApiServices";
-
+import CompLoader from "../../components/ui/CompLoader.vue";
 export default {
   components: {
     DashboardBanner,
     ClientCard,
     CategoryCard,
+    CompLoader,
   },
   name: "ClientDashboard",
   data() {
     return {
       allCategiries: [],
       imagePreview: "",
+      isLoading: false,
     };
   },
   methods: {
@@ -74,6 +125,7 @@ export default {
     //     .catch((error) => console.log(error));
     // },
     getAllCategory() {
+      this.isLoading = true;
       ApiServices.getAllCategory()
         .then(async (response) => {
           const categories = response.data.data;
@@ -99,7 +151,10 @@ export default {
 
           this.allCategiries = categoriesWithImages;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
 
     loadImage(event) {
