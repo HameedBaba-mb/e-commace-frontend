@@ -203,6 +203,11 @@ export default {
         })
         .catch((error) => {
           console.error(error);
+          this.$refs.notify.showMessage(
+            "Registration Failed",
+            error.response.data.message,
+            "error"
+          );
         });
     },
     loadImage(event) {

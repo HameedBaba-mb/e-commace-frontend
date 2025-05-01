@@ -46,11 +46,12 @@
       <div class="row">
         <div class="col-12">
           <div class="card card-body client-border">
-            <h1>Recent 5 Orders</h1>
-            <hr />
-            <table class="table">
+            <h1 class="fs-7">Recent 5 Orders</h1>
+            <!-- <hr /> -->
+          <div class="table-responsive">
+            <table class="table text-nowrap align-middle mb-0">
               <thead>
-                <tr>
+                <tr class="border-2 border-bottom border-primary border-0">
                   <th scope="col">#</th>
                   <th scope="col">Product Name</th>
                   <th scope="col">Item Quentity</th>
@@ -105,6 +106,7 @@
                 </tr>
               </tbody>
             </table>
+          </div>
           </div>
         </div>
       </div>
@@ -233,5 +235,7 @@ export default {
   text-transform: capitalize;
   font-weight: 600;
   text-align: center;
+  width: 100% !important;
+  margin: 0 auto;
 }
 </style>

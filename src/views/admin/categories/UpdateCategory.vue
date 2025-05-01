@@ -159,15 +159,18 @@ export default {
     //     });
     // },
     updateCategoryById() {
+      console.log(this.allCategories);
       const formData = new FormData();
       formData.append("title", this.allCategories.title);
       formData.append("description", this.allCategories.description);
       formData.append("slug", this.allCategories.slug);
+      formData.append("category_image", this.allCategories.category_image);
+
 
       // only append category_image if it's a File (new image selected)
-      if (this.allCategories.category_image instanceof File) {
-        formData.append("category_image", this.allCategories.category_image);
-      }
+      // if (this.allCategories.category_image instanceof File) {
+      //   formData.append("category_image", this.allCategories.category_image);
+      // }
 
       ApiServices.updateCategoryById(this.categoryId, formData)
         .then((response) => {

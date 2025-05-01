@@ -12,12 +12,13 @@
     <div class="container-lg mt-4">
       <div class="row">
         <div class="col-12">
-          <div class="card card-body client-boder">
-            <h1>Recent Carts</h1>
-            <hr />
-            <table class="table">
+          <div class="card card-body client-border">
+            <h1 class="fs-7">Recent Carts</h1>
+            <!-- <hr /> -->
+           <div class="table-responsive">
+            <table class="table text-nowrap align-middle mb-0">
               <thead>
-                <tr>
+                <tr class="border-2 border-bottom border-primary border-0">
                   <th scope="col">#</th>
                   <th scope="col">Product Name</th>
                   <th scope="col">Price</th>
@@ -40,7 +41,7 @@
                         <i class="fa fa-ellipsis-h"></i>
                       </button>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Remove</a></li>
+                        <li><button class="dropdown-item" @click="findProductToDelete(cart.productId)">Remove</button></li>
                         <li>
                           <button
                             class="dropdown-item"
@@ -55,6 +56,7 @@
                 </tr>
               </tbody>
             </table>
+           </div>
           </div>
         </div>
       </div>
@@ -129,6 +131,49 @@
       </div>
     </div>
   </div>
+
+  <div
+    class="modal fade"
+    id="deleteModal"
+    aria-hidden="true"
+    aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1"
+    ref="removeModal"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Confirm</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-center">
+          <p class="alert alert-danger">
+            Are you sure you want delete this product
+          </p>
+          <p class="fw-bold">
+            {{ productToDelete?.Product?.title }} 
+            <!-- <pre>{{ productToDelete.id }}</pre> -->
+          </p>
+          <button class="btn btn-primary me-3" @click="closeRemoveModal">
+            Close
+          </button>
+          <button
+            class="btn btn-danger"
+            @click="deleteCart(this.productToDelete.id)"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
 </template>
   
   <script>
@@ -166,9 +211,16 @@ export default {
         .catch((error) => console.log(error));
     },
     deleteCart() {
-      ApiServices.deleteCart(this.userId)
+      ApiServices.deleteCart(this.productToDelete.id)
         .then((response) => {
-          this.allCarts = response.data.data;
+          this.closeRemoveModal();
+          this.$refs.notify.showMessage(
+            "Delete Successful",
+            "Product have successfully deleted.",
+            "success"
+          );
+          this.getClientCart();
+          // this.allCarts = response.data.data;
         })
         .catch((error) => console.log(error));
     },
@@ -219,7 +271,7 @@ export default {
       this.allCarts.forEach((cart) => {
         if (cart.Product.id === productId) {
           this.productToDelete = cart;
-          this.openModal();
+          this.openRemoveModal();
         }
       });
     },
@@ -232,6 +284,19 @@ export default {
     closeModal() {
       if (!this.modalInstance) {
         this.modalInstance = new Modal(this.$refs.orderModal);
+      }
+      this.modalInstance.hide();
+    },
+
+    openRemoveModal() {
+      if (!this.modalInstance) {
+        this.modalInstance = new Modal(this.$refs.removeModal);
+      }
+      this.modalInstance.show();
+    },
+    closeRemoveModal() {
+      if (!this.modalInstance) {
+        this.modalInstance = new Modal(this.$refs.removeModal);
       }
       this.modalInstance.hide();
     },

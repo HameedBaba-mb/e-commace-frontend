@@ -56,13 +56,13 @@
             <ul
               class="navbar-nav flex-row ms-auto align-items-center justify-content-end"
             >
-              <li class="nav-item dropdown">
-                <router-link
-                  :to="{ name: 'login' }"
+              <li class="nav-item">
+                <button
+                  @click="logOut"
                   class="btn btn-outline-light mx-3 mt-2 d-block"
                 >
-                  <i class="fa fa-sign-out me-2"></i> Logout</router-link
-                >
+                  <i class="fa fa-sign-out me-2"></i> Logout
+                </button>
               </li>
             </ul>
           </div>
@@ -73,7 +73,25 @@
 </template>
 
 <script>
-export default {};
+import apiClient from "../../services/apiClient";
+export default {
+  data() {
+    return {
+      authUser: JSON.parse(localStorage.getItem("e_commace_active_user")),
+    };
+  },
+  methods: {
+    async logOut() {
+      if (this.authUser) {
+        localStorage.removeItem("e_commace_active_user");
+
+        apiClient.defaults.headers.common["Authorization"] = "";
+
+        await this.$router.push({ name: "login" });
+      }
+    },
+  },
+};
 </script>
 
 <style lang="css" scoped>

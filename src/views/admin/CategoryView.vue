@@ -22,57 +22,60 @@
               >
               <h5 class="card-title fw-semibold mb-4">Category Records</h5>
             </div>
-            <table class="table table-responsive">
-              <thead>
-                <tr>
-                  <th scope="col">SN</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Description Name</th>
-                  <th scope="col">Image</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(category, index) in allCategiries" :key="index">
-                  <th scope="row">{{ index + 1 }}</th>
-                  <td>{{ category.title }}</td>
-                  <td>{{ category.description }}</td>
-                  <td>{{ category.category_image }}</td>
-                  <td>
-                    <div class="dropdown ms-auto">
-                      <button
-                        class="btn btn-sm btn-primary dropdown-toggles border"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style="border-radius: 5px"
-                      >
-                        <i class="fa fa-ellipsis-h"></i>
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li>
-                          <router-link
-                            class="dropdown-item"
-                            :to="{
-                              name: 'update.category',
-                              params: { id: category.id },
-                            }"
-                            >Update</router-link
-                          >
-                        </li>
-                        <li>
-                          <button
-                            class="dropdown-item"
-                            @click="getCategoryToDelete(category.id)"
-                          >
-                            Delete
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table text-nowrap align-middle mb-0">
+                <thead>
+                  <tr class="border-2 border-bottom border-primary border-0">
+                    <th scope="col">SN</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(category, index) in allCategiries" :key="index">
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td>{{ category.title }}</td>
+                    <td>{{ category.description }}</td>
+                    <td>{{ category.category_image }}</td>
+                    <td>
+                      <div class="dropdown ms-auto">
+                        <button
+                          class="btn btn-sm btn-primary dropdown-toggles border"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          style="border-radius: 5px"
+                        >
+                          <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <router-link
+                              class="dropdown-item"
+                              :to="{
+                                name: 'update.category',
+                                params: { id: category.id },
+                              }"
+                              >Update</router-link
+                            >
+                          </li>
+                          <li>
+                            <button
+                              class="dropdown-item"
+                              @click="getCategoryToDelete(category.id)"
+                            >
+                              Delete
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
           </div>
         </div>
       </div>
@@ -102,7 +105,7 @@
             Are you sure you want delete this category
           </p>
           <p class="fw-bold">
-            {{ categoryToDelete.first_name + " " + categoryToDelete.last_name }}
+            {{ categoryToDelete.title }}
           </p>
           <button class="btn btn-primary me-3" @click="closeDeleteModal">
             Close

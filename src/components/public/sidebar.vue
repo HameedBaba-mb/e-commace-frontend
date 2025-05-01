@@ -2,7 +2,7 @@
   <aside class="left-sidebar">
     <!-- Sidebar scroll-->
     <div>
-      <div class="brand-logo d-flex align-items-center justify-content-center">
+      <div class="brand-logo d-flex align-items-center justify-content-between">
         <p class="fs-6 fw-bold text-dark mb-0 d-none d-sm-block">
           Campus Store
         </p>
@@ -11,7 +11,7 @@
           id="sidebarCollapse"
           @click="toggleSidebar"
         >
-          <i class="ti ti-x fs-8"></i>
+          <i class="fa fa-times-circle text-primary fs-8"></i>
         </div>
       </div>
       <!-- Sidebar navigation-->

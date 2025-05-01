@@ -22,61 +22,63 @@
               >
               <h5 class="card-title fw-semibold mb-4">Client Records</h5>
             </div>
-            <table class="table table-responsive">
-              <thead>
-                <tr>
-                  <th scope="col">SN</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Phone Number</th>
-                  <th scope="col">Role</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(admins, index) in allAdmins" :key="index">
-                  <th scope="row">{{ index + 1 }}</th>
-                  <td>{{ admins.first_name }}</td>
-                  <td>{{ admins.last_name }}</td>
-                  <td>{{ admins.email }}</td>
-                  <td>{{ admins.phone_no }}</td>
-                  <td class="text-capitalize">{{ admins.user_status }}</td>
-                  <td>
-                    <div class="dropdown ms-auto">
-                      <button
-                        class="btn btn-sm btn-primary dropdown-toggles border"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style="border-radius: 5px"
-                      >
-                        <i class="fa fa-ellipsis-h"></i>
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li>
-                          <router-link
-                            class="dropdown-item"
-                            :to="{
-                              name: 'update.client',
-                              params: { id: admins.id },
-                            }"
-                            >Update</router-link
-                          >
-                        </li>
-                        <li>
-                          <button
-                            class="dropdown-item"
-                            @click="getAdminToDelete(admins.id)"
-                          >
-                            Delete
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table text-nowrap align-middle mb-0">
+                <thead>
+                  <tr class="border-2 border-bottom border-primary border-0">
+                    <th scope="col">SN</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(admins, index) in allAdmins" :key="index">
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td>{{ admins.first_name }}</td>
+                    <td>{{ admins.last_name }}</td>
+                    <td>{{ admins.email }}</td>
+                    <td>{{ admins.phone_no }}</td>
+                    <td class="text-capitalize">{{ admins.user_status }}</td>
+                    <td>
+                      <div class="dropdown ms-auto">
+                        <button
+                          class="btn btn-sm btn-primary dropdown-toggles border"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          style="border-radius: 5px"
+                        >
+                          <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <router-link
+                              class="dropdown-item"
+                              :to="{
+                                name: 'update.client',
+                                params: { id: admins.id },
+                              }"
+                              >Update</router-link
+                            >
+                          </li>
+                          <li>
+                            <button
+                              class="dropdown-item"
+                              @click="getAdminToDelete(admins.id)"
+                            >
+                              Delete
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

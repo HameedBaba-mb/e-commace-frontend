@@ -14,6 +14,7 @@ window.$ = window.jQuery = $;
 
 import "./assets/libs/jquery/dist/jquery.min.js";
 import "./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js";
+import "./assets/js/sidebarmenu.js";
 
 import axios from "axios";
 window.axios = axios;

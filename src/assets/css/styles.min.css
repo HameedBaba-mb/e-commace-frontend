@@ -16599,9 +16599,15 @@ textarea.form-control-lg {
       flex-shrink: 0;
   font-size: 21px;
 }
+.router-link-active {
+  background-color: #2952ff;
+  color: #fff !important;
+}
 .sidebar-nav ul .sidebar-item .sidebar-link:hover {
-  background-color: rgba(41, 82, 255, 0.1);
-  color: #2952ff;
+  /* background-color: rgba(41, 82, 255, 0.1);
+  color: #2952ff; */
+  background-color: #2952ff;
+  color: #fff !important;
 }
 .sidebar-nav ul .sidebar-item .sidebar-link:hover.has-arrow::after {
   border-color: #2952ff;
@@ -16617,6 +16623,8 @@ textarea.form-control-lg {
   background-color: #2952ff;
   color: #fff;
 }
+
+
 .sidebar-nav .sidebar-list .sidebar-list-item {
   padding: 8px 0;
 }

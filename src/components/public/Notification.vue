@@ -20,7 +20,8 @@
           />
           <div>
             <p class="msg-title mt-2">{{ msg.title }}</p>
-            <p class="msg-text">{{ msg.text }}</p>
+            <p v-html="msg.text" class="msg-text"></p>
+            <!-- <p  class="msg-text">{{ msg.text }}</p> -->
           </div>
         </div>
       </div>

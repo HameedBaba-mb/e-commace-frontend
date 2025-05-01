@@ -195,7 +195,7 @@ export default {
         allProducts.append("product_image", this.allProducts.product_image);
       }
 
-      ApiServices.updateProductById(this.categoryId, this.allProducts)
+      ApiServices.updateProductById(this.productId, this.allProducts)
         .then((response) => {
           this.$refs.notify.showMessage(
             "Update Successful",
