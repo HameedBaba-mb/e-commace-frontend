@@ -48,65 +48,81 @@
           <div class="card card-body client-border">
             <h1 class="fs-7">Recent 5 Orders</h1>
             <!-- <hr /> -->
-          <div class="table-responsive">
-            <table class="table text-nowrap align-middle mb-0">
-              <thead>
-                <tr class="border-2 border-bottom border-primary border-0">
-                  <th scope="col">#</th>
-                  <th scope="col">Product Name</th>
-                  <th scope="col">Item Quentity</th>
-                  <th scope="col">Total Amount</th>
-                  <th scope="col">Order Status</th>
-                  <th scope="col">Payment Status</th>
-                  <th scope="col">Order Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(order, index) in recentOrders" :key="index">
-                  <th scope="row">{{ index + 1 }}</th>
-                  <td>{{ order.Product?.title }}</td>
-                  <td>{{ order.item_quentity }}</td>
-                  <td>{{ order.total_amount }}</td>
-                  <td>
-                    <!-- {{ order.order_status }} -->
-                    <p
-                      class="transaction-status w-50"
-                      :style="{
-                        color: setOrderStatusColor(order.order_status).color,
-                        backgroundColor: setOrderStatusColor(order.order_status)
-                          .backgroundColor,
-                        border: setOrderStatusColor(order.order_status).border,
-                      }"
-                    >
-                      {{ order.order_status }}
-                    </p>
-                  </td>
-                  <td class="">
-                    <!-- {{ order.order_status }} -->
-                    <p
-                      class="transaction-status w-50"
-                      :style="{
-                        color: setPaymentStatusColor(order.payment_status)
-                          .color,
-                        backgroundColor: setPaymentStatusColor(
-                          order.payment_status
-                        ).backgroundColor,
-                        border: setPaymentStatusColor(order.payment_status)
-                          .border,
-                      }"
-                    >
-                      {{ order.payment_status }}
-                    </p>
-                  </td>
-                  <td>
-                    {{
-                      order.createdAt ? order.createdAt.substring(0, 10) : ""
-                    }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <div class="table-responsive">
+              <table class="table text-nowrap align-middle mb-0">
+                <thead>
+                  <tr class="border-2 border-bottom border-primary border-0">
+                    <th scope="col">#</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Item Quentity</th>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Order Status</th>
+                    <th scope="col">Payment Status</th>
+                    <th scope="col">Order Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-if="isLoadingOrders" class="text-center">
+                    <td colspan="7">
+                      <div
+                        class="spinner-border text-primary"
+                        role="status"
+                      ></div>
+                    </td>
+                  </tr>
+                  <tr v-if="!isLoadingOrders && recentOrders.length === 0">
+                    <td colspan="4" class="text-center">
+                      No recent orders found.
+                    </td>
+                  </tr>
+
+                  <tr v-for="(order, index) in recentOrders" :key="index">
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td>{{ order.Product?.title }}</td>
+                    <td>{{ order.item_quentity }}</td>
+                    <td>{{ order.total_amount }}</td>
+                    <td>
+                      <!-- {{ order.order_status }} -->
+                      <p
+                        class="transaction-status w-50"
+                        :style="{
+                          color: setOrderStatusColor(order.order_status).color,
+                          backgroundColor: setOrderStatusColor(
+                            order.order_status
+                          ).backgroundColor,
+                          border: setOrderStatusColor(order.order_status)
+                            .border,
+                        }"
+                      >
+                        {{ order.order_status }}
+                      </p>
+                    </td>
+                    <td class="">
+                      <!-- {{ order.order_status }} -->
+                      <p
+                        class="transaction-status w-50"
+                        :style="{
+                          color: setPaymentStatusColor(order.payment_status)
+                            .color,
+                          backgroundColor: setPaymentStatusColor(
+                            order.payment_status
+                          ).backgroundColor,
+                          border: setPaymentStatusColor(order.payment_status)
+                            .border,
+                        }"
+                      >
+                        {{ order.payment_status }}
+                      </p>
+                    </td>
+                    <td>
+                      {{
+                        order.createdAt ? order.createdAt.substring(0, 10) : ""
+                      }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -126,7 +142,7 @@ export default {
   name: "ClientDashboard",
   data() {
     return {
-      isLoading: false,
+      isLoadingOrders: false,
       recentOrders: [],
       orderStats: {
         totalOrders: 0,
@@ -148,6 +164,7 @@ export default {
         });
     },
     getClientRecentOrders() {
+      this.isLoadingOrders = true;
       ApiServices.getClientRecentOrders(this.userId)
         .then((response) => {
           this.recentOrders = response.data.data;
@@ -155,6 +172,9 @@ export default {
         })
         .catch((error) => {
           console.error("Error fetching categories:", error);
+        })
+        .finally(() => {
+          this.isLoadingOrders = false;
         });
     },
     setOrderStatusColor(status) {

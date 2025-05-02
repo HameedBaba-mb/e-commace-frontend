@@ -57,19 +57,7 @@
                   />
                   <vee-error-message name="description" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                  <label for="slug" class="form-label">Slug</label>
-                  <vee-field
-                    type="email"
-                    class="form-control"
-                    id="slug"
-                    name="slug"
-                    aria-describedby="emailHelp"
-                    placeholder="SLug"
-                    v-model="formData.slug"
-                  />
-                  <vee-error-message name="slug" class="text-danger" />
-                </div>
+
                 <div class="mb-3">
                   <label for="category_image" class="form-label"
                     >Category Image</label
@@ -134,7 +122,6 @@ export default {
         title: "",
         description: "",
         category_image: "",
-        slug: "",
       },
       imagePreview: "",
       formValidation,

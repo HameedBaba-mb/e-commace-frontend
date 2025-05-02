@@ -1,8 +1,11 @@
 <template>
   <div class="card overflow-hidden hover-img border">
     <div class="position-relative">
+      <div v-if="isLoadingImg" class="text-center">
+        <i class="spinner-border text-primary" role="status"></i>
+      </div>
       <img
-        v-if="img"
+        v-if="!isLoadingImg && img"
         :src="img"
         class="card-img-top card-img"
         alt="matdash-img"
@@ -19,13 +22,9 @@
       <p class="d-block my-4 text-dark">
         {{ description ? description.substring(0, 100) : "" }}
       </p>
-
-
-
       <slot name="card-content">
         <!-- modal content  -->
       </slot>
-     
     </div>
   </div>
 </template>
@@ -47,6 +46,10 @@ export default {
     img: {
       type: String,
       default: "",
+    },
+    isLoadingImg: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

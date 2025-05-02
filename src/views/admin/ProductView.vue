@@ -28,19 +28,36 @@
                   <tr class="border-2 border-bottom border-primary border-0">
                     <th scope="col">SN</th>
                     <th scope="col">Title</th>
-                    <!-- <th scope="col">Description</th> -->
-                    <th scope="col">Slud</th>
-                    <th scope="col">Availability</th>
+                    <th scope="col">Price</th>
                     <th scope="col">Category</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
+                  <tr v-if="isLoadingProduct" class="text-center">
+                    <td colspan="5">
+                      <div
+                        class="spinner-border text-primary"
+                        role="status"
+                      ></div>
+                    </td>
+                  </tr>
+                  <tr v-if="!isLoadingProduct && allProducts.length === 0">
+                    <td colspan="5" class="text-center">No product found.</td>
+                  </tr>
                   <tr v-for="(product, index) in allProducts" :key="index">
                     <th scope="row">{{ index + 1 }}</th>
                     <td>{{ product.title }}</td>
-                    <td>{{ product.slug }}</td>
-                    <td>{{ product.is_active }}</td>
+                    <td>
+                      {{
+                        product.price
+                          ? product.price.toLocaleString("en-NG", {
+                              style: "currency",
+                              currency: "NGN",
+                            })
+                          : ""
+                      }}
+                    </td>
                     <td>{{ product.Category.title }}</td>
                     <!-- <td class="text-capitalize">{{ product.user_status }}</td> -->
                     <td>
@@ -140,15 +157,20 @@ export default {
       allProducts: [],
       deleteModalInstance: null,
       productToDelete: {},
+      isLoadingProduct: false,
     };
   },
   methods: {
     getAllProducts() {
+      this.isLoadingProduct = true;
       ApiServices.getAllProducts()
         .then((response) => {
           this.allProducts = response.data.data;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.isLoadingProduct = false;
+        });
     },
     deleteProductById(id) {
       ApiServices.deleteProductById(id)

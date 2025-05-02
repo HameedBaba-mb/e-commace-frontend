@@ -88,7 +88,7 @@ const router = createRouter({
         ),
       meta: {
         title: "New Account",
-        requiresAuth: true,
+        // requiresAuth: true,
       },
     },
     // Admin side

@@ -53,7 +53,7 @@
           <div class="row">
             <!-- Loading Spinner -->
             <div v-if="isLoading" class="text-center">
-              <i class="fa fa-spinner fa-spin fa-2x"></i>
+              <i class="spinner-border text-primary" role="status"></i>
             </div>
 
             <!-- No Categories Found -->
@@ -73,6 +73,7 @@
                 :title="category.title"
                 :img="category.imageUrl"
                 :prodId="category.id"
+                :isLoadingImg="isLoadingImg"
               >
                 <template #card-content>
                   <router-link
@@ -114,6 +115,7 @@ export default {
       allCategiries: [],
       imagePreview: "",
       isLoading: false,
+      isLoadingImg: false,
     };
   },
   methods: {
@@ -157,6 +159,40 @@ export default {
         });
     },
 
+    // getAllCategory() {
+    //   this.isLoading = true;
+
+    //   ApiServices.getAllCategory()
+    //     .then((response) => {
+    //       const categories = response.data.data;
+
+    //       const imageFetchPromises = categories.map((category) => {
+    //         return ApiServices.getCatetoryImage(category.category_image)
+    //           .then((imageResponse) => {
+    //             const blob = new Blob([imageResponse.data], {
+    //               type: imageResponse.headers["content-type"],
+    //             });
+    //             category.imageUrl = URL.createObjectURL(blob);
+    //             return category;
+    //           })
+    //           .catch(() => {
+    //             category.imageUrl = null;
+    //             return category;
+    //           });
+    //       });
+
+    //       return Promise.all(imageFetchPromises);
+    //     })
+    //     .then((categoriesWithImages) => {
+    //       this.allCategiries = categoriesWithImages;
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     })
+    //     .finally(() => {
+    //       this.isLoading = false;
+    //     });
+    // },
     loadImage(event) {
       document.getElementById("category_image").click();
     },
@@ -174,6 +210,7 @@ export default {
       reader.readAsDataURL(files[0]);
     },
     getCatetoryImage(image_name) {
+      this.isLoadingImg = true;
       ApiServices.getCatetoryImage(image_name, {
         responseType: "blob",
       })
@@ -186,6 +223,9 @@ export default {
         })
         .catch((error) => {
           console.error(error);
+        })
+        .finally(() => {
+          this.isLoadingImg = false;
         });
     },
   },

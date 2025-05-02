@@ -29,6 +29,21 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td colspan="8">
+                      <div v-if="isLoadingOrder" class="text-center">
+                        <i
+                          class="spinner-border text-primary"
+                          role="status"
+                        ></i>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr v-if="!isLoadingOrder && allOrders.length === 0">
+                    <td colspan="4" class="text-center">
+                      No recent carts found.
+                    </td>
+                  </tr>
                   <tr v-for="(order, index) in allOrders" :key="index">
                     <th scope="row">{{ index + 1 }}</th>
                     <td>{{ order.Product?.title }}</td>
@@ -81,9 +96,9 @@
                         {{ order.payment_status }}
                       </p>
                     </td>
-
                     <td>
                       <button
+                        v-if="order.order_status === 'pending'"
                         class="btn btn-sm btn-danger"
                         @click="getOrderToCancell(order.id)"
                       >
@@ -155,15 +170,20 @@ export default {
       allOrders: [],
       orderToCancell: {},
       modalInstance: null,
+      isLoadingOrder: true,
     };
   },
   methods: {
     getClientOrders() {
+      this.isLoadingOrder = true;
       ApiServices.getClientOrders(this.userId)
         .then((response) => {
           this.allOrders = response.data.data;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.isLoadingOrder = false;
+        });
     },
     setOrderStatusColor(status) {
       switch (status) {

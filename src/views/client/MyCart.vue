@@ -15,48 +15,77 @@
           <div class="card card-body client-border">
             <h1 class="fs-7">Recent Carts</h1>
             <!-- <hr /> -->
-           <div class="table-responsive">
-            <table class="table text-nowrap align-middle mb-0">
-              <thead>
-                <tr class="border-2 border-bottom border-primary border-0">
-                  <th scope="col">#</th>
-                  <th scope="col">Product Name</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(cart, index) in allCarts" :key="index">
-                  <th scope="row">{{ index + 1 }}</th>
-                  <td>{{ cart.Product.title }}</td>
-                  <td>{{ cart.Product.price }}</td>
-                  <td>
-                    <div class="dropdown ms-auto">
-                      <button
-                        class="btn btn-sm btn-primary dropdown-toggles border"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style="border-radius: 5px"
-                      >
-                        <i class="fa fa-ellipsis-h"></i>
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><button class="dropdown-item" @click="findProductToDelete(cart.productId)">Remove</button></li>
-                        <li>
-                          <button
-                            class="dropdown-item"
-                            @click="findSelectedProduct(cart.productId)"
-                          >
-                            Make Order
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-           </div>
+            <div class="table-responsive">
+              <table class="table text-nowrap align-middle mb-0">
+                <thead>
+                  <tr class="border-2 border-bottom border-primary border-0">
+                    <th scope="col">#</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="4">
+                      <div v-if="isLoadingImg" class="text-center">
+                        <i
+                          class="spinner-border text-primary"
+                          role="status"
+                        ></i>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr v-if="!isLoadingCart && allCarts.length === 0">
+                    <td colspan="4" class="text-center">
+                      No recent carts found.
+                    </td>
+                  </tr>
+
+                  <tr v-for="(cart, index) in allCarts" :key="index">
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td>{{ cart.Product.title }}</td>
+                    <td>
+                      {{ cart.Product.price ? cart.Product.price.toLocaleString("en-NG", {
+                              style: "currency",
+                              currency: "NGN",
+                            })
+                          : "" }}
+                    </td>
+                    <td>
+                      <div class="dropdown ms-auto">
+                        <button
+                          class="btn btn-sm btn-primary dropdown-toggles border"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          style="border-radius: 5px"
+                        >
+                          <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <button
+                              class="dropdown-item"
+                              @click="findProductToDelete(cart.productId)"
+                            >
+                              Remove
+                            </button>
+                          </li>
+                          <li>
+                            <button
+                              class="dropdown-item"
+                              @click="findSelectedProduct(cart.productId)"
+                            >
+                              Make Order
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -156,7 +185,7 @@
             Are you sure you want delete this product
           </p>
           <p class="fw-bold">
-            {{ productToDelete?.Product?.title }} 
+            {{ productToDelete?.Product?.title }}
             <!-- <pre>{{ productToDelete.id }}</pre> -->
           </p>
           <button class="btn btn-primary me-3" @click="closeRemoveModal">
@@ -172,8 +201,6 @@
       </div>
     </div>
   </div>
-
- 
 </template>
   
   <script>
@@ -200,15 +227,20 @@ export default {
       modalInstance: null,
       quentyError: "",
       productToDelete: {},
+      isLoadingCart: false,
     };
   },
   methods: {
     getClientCart() {
+      this.isLoadingCart = true;
       ApiServices.getClientCart(this.userId)
         .then((response) => {
           this.allCarts = response.data.data;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.isLoadingCart = false;
+        });
     },
     deleteCart() {
       ApiServices.deleteCart(this.productToDelete.id)
@@ -263,6 +295,7 @@ export default {
       this.allCarts.forEach((cart) => {
         if (cart.Product.id === productId) {
           this.selectedProduct = cart;
+          this.quantity = 0;
           this.openModal();
         }
       });

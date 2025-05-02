@@ -22,8 +22,7 @@
               >
                 <!-- <img src="../assets/images/logos/logo-light.svg" alt="" /> -->
               </a>
-              <p class="text-center fw-bold card-title mt-5">
-                Update  product              </p>
+              <p class="text-center fw-bold card-title mt-5">Update product</p>
               <vee-form
                 @submit="updateProductById"
                 :validation-schema="formValidation"
@@ -90,19 +89,7 @@
                   />
                   <vee-error-message name="price" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                  <label for="slug" class="form-label">Slug</label>
-                  <vee-field
-                    type="email"
-                    class="form-control"
-                    id="slug"
-                    name="slug"
-                    aria-describedby="emailHelp"
-                    placeholder="SLug"
-                    v-model="allProducts.slug"
-                  />
-                  <vee-error-message name="slug" class="text-danger" />
-                </div>
+
                 <div class="mb-3">
                   <label for="product_image" class="form-label"
                     >Category Image</label
@@ -132,7 +119,7 @@
                   </div>
                 </div>
                 <button class="btn btn-primary w-100 py-8 fs-4 mb-4">
-                  Register
+                  Update
                 </button>
               </vee-form>
             </div>
@@ -165,15 +152,6 @@ export default {
     });
 
     return {
-      // allProducts: {
-      //   title: "",
-      //   description: "",
-      //   slug: "",
-      //   categoryId: "",
-      //   product_image: "",
-      //   is_active: true,
-      //   price: "",
-      // },
       allProducts: {},
       allCategiries: [],
       imagePreview: "",
@@ -185,7 +163,6 @@ export default {
       const allProducts = new FormData();
       allProducts.append("title", this.allProducts.title);
       allProducts.append("description", this.allProducts.description);
-      allProducts.append("slug", this.allProducts.slug);
       allProducts.append("categoryId", this.allProducts.categoryId);
       allProducts.append("price", this.allProducts.price);
       allProducts.append("is_active", this.allProducts.is_active);
@@ -195,7 +172,12 @@ export default {
         allProducts.append("product_image", this.allProducts.product_image);
       }
 
-      ApiServices.updateProductById(this.productId, this.allProducts)
+      const cleanData = {
+        ...this.allProducts,
+        price: Number(this.allProducts.price?.replace(/[^0-9.]/g, "")),
+      };
+
+      ApiServices.updateProductById(this.productId, cleanData)
         .then((response) => {
           this.$refs.notify.showMessage(
             "Update Successful",

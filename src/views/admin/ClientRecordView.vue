@@ -36,7 +36,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(admins, index) in allAdmins" :key="index">
+                  <tr v-if="isLoadingClient" class="text-center">
+                    <td colspan="8">
+                      <div
+                        class="spinner-border text-primary"
+                        role="status"
+                      ></div>
+                    </td>
+                  </tr>
+                  <tr v-if="!isLoadingClient && allClient.length === 0">
+                    <td colspan="8" class="text-center">No client found.</td>
+                  </tr>
+                  <tr v-for="(admins, index) in allClient" :key="index">
                     <th scope="row">{{ index + 1 }}</th>
                     <td>{{ admins.first_name }}</td>
                     <td>{{ admins.last_name }}</td>
@@ -137,18 +148,23 @@ export default {
   },
   data() {
     return {
-      allAdmins: [],
+      allClient: [],
       deleteModalInstance: null,
       adminToDelete: {},
+      isLoadingClient: false,
     };
   },
   methods: {
     getAllClient() {
+      this.isLoadingClient = true;
       ApiServices.getAllClient()
         .then((response) => {
-          this.allAdmins = response.data.data;
+          this.allClient = response.data.data;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.isLoadingClient = false;
+        });
     },
     deleteAdmin(id) {
       ApiServices.deleteUser(id)
@@ -172,7 +188,7 @@ export default {
     },
 
     getAdminToDelete(id) {
-      this.adminToDelete = this.allAdmins.find((admin) => admin.id === id);
+      this.adminToDelete = this.allClient.find((admin) => admin.id === id);
       if (id) {
         this.openDeleteModal();
       }

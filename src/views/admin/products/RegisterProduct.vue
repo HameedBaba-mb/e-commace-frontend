@@ -91,19 +91,7 @@
                   />
                   <vee-error-message name="price" class="text-danger" />
                 </div>
-                <div class="mb-3">
-                  <label for="slug" class="form-label">Slug</label>
-                  <vee-field
-                    type="email"
-                    class="form-control"
-                    id="slug"
-                    name="slug"
-                    aria-describedby="emailHelp"
-                    placeholder="SLug"
-                    v-model="formData.slug"
-                  />
-                  <vee-error-message name="slug" class="text-danger" />
-                </div>
+
                 <div class="mb-3">
                   <label for="product_image" class="form-label"
                     >Category Image</label
@@ -169,7 +157,6 @@ export default {
       formData: {
         title: "",
         description: "",
-        slug: "",
         categoryId: "",
         product_image: "",
         is_active: true,
@@ -190,7 +177,11 @@ export default {
     },
 
     registerProduct() {
-      ApiServices.registerProduct(this.formData)
+      const cleanData = {
+        ...this.formData,
+        price: Number(this.formData.price?.replace(/[^0-9.]/g, "")),
+      };
+      ApiServices.registerProduct(cleanData)
         .then((response) => {
           this.$refs.notify.showMessage(
             "Registration Successful",

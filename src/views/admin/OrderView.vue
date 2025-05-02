@@ -30,16 +30,26 @@
                   <tr class="border-2 border-bottom border-primary border-0">
                     <th scope="col">SN</th>
                     <th scope="col">Client</th>
-                    <!-- <th scope="col">Description</th> -->
                     <th scope="col">Quentity</th>
                     <th scope="col">Amount</th>
                     <th scope="col">Order Status</th>
-                    <th scope="col">Payment</th>
+                    <th scope="col">Payment Status</th>
                     <th scope="col">Order Date</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
+                  <tr v-if="isLoadingOrder" class="text-center">
+                    <td colspan="8">
+                      <div
+                        class="spinner-border text-primary"
+                        role="status"
+                      ></div>
+                    </td>
+                  </tr>
+                  <tr v-if="!isLoadingOrder && allOrders.length === 0">
+                    <td colspan="8" class="text-center">No order found.</td>
+                  </tr>
                   <tr v-for="(order, index) in allOrders" :key="index">
                     <th scope="row">{{ index + 1 }}</th>
                     <td>
@@ -345,15 +355,20 @@ export default {
         order_status: "",
         payment_status: "",
       },
+      isLoadingOrder: false,
     };
   },
   methods: {
     getAllOrders() {
+      this.isLoadingOrder = true;
       ApiServices.getAllOrders()
         .then((response) => {
           this.allOrders = response.data.data;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.isLoadingOrder = false;
+        });
     },
     completeOrder() {
       const cleanData = {

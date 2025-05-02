@@ -94,16 +94,16 @@
             </router-link>
           </li>
           <li class="sidebar-item">
-            <router-link
-              class="sidebar-link"
-              :to="{ name: 'login' }"
+            <button
+              class="btn w-100 sidebar-link"
               aria-expanded="false"
+              @click="logOut"
             >
               <span>
                 <i class="fa fa-sign-out"></i>
               </span>
               <span class="hide-menu">Logout</span>
-            </router-link>
+            </button>
           </li>
         </ul>
       </nav>
@@ -114,10 +114,13 @@
 </template>
 
 <script>
+import apiClient from '../../services/apiClient';
+
 export default {
   data() {
     return {
       isMiniSidebar: false,
+      authUser: JSON.parse(localStorage.getItem("e_commace_active_user")),
     };
   },
   methods: {
@@ -136,6 +139,15 @@ export default {
         "data-sidebartype",
         this.isMiniSidebar ? "mini-sidebar" : "full"
       );
+    },
+    async logOut() {
+      if (this.authUser) {
+        localStorage.removeItem("e_commace_active_user");
+
+        apiClient.defaults.headers.common["Authorization"] = "";
+
+        await this.$router.push({ name: "login" });
+      }
     },
   },
 };

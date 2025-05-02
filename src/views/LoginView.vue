@@ -17,8 +17,9 @@
           <div class="col-md-8 col-lg-6 col-xxl-3">
             <div class="card mb-0">
               <div class="card-body">
-              
-                <p class=" text-center m mb-3 fs-6 fw-bold text-dark mb-0 d-none d-sm-block">
+                <p
+                  class="text-center m mb-3 fs-6 fw-bold text-dark mb-0 d-none d-sm-block"
+                >
                   Campus Store
                 </p>
                 <p class="text-center">Login to your account</p>
@@ -49,10 +50,19 @@
                     <vee-error-message name="password" class="text-danger" />
                   </div>
 
-                  <button class="btn btn-primary w-100 py-8 fs-4 mb-4">
-                    Sign In
-                  </button>
+                  <button
+                    v-html="checkingBtn"
+                    :disabled="isLoging"
+                    class="btn btn-primary w-100 py-8 fs-4 mb-4"
+                  ></button>
                 </vee-form>
+                <div
+                  v-if="errorMessage"
+                  class="alert alert-danger text-center mb-4"
+                  role="alert"
+                >
+                  <b class=""> {{ errorMessage }}</b>
+                </div>
 
                 <div class="d-flex align-items-center justify-content-center">
                   <p class="fs-4 mb-0 fw-bold">New to account?</p>
@@ -92,14 +102,17 @@ export default {
     });
     return {
       formValidation,
+      isLoging: false,
       formData: {
         email: "",
         password: "",
       },
+      errorMessage: "",
     };
   },
   methods: {
     login() {
+      this.isLoging = true;
       ApiServices.login(this.formData)
         .then((response) => {
           if (response.status === 200) {
@@ -123,11 +136,26 @@ export default {
         })
         .catch((error) => {
           console.error(error);
+          if (error.response) {
+            this.errorMessage = error.response.data.message;
+            setTimeout(() => {
+              this.errorMessage = "";
+            }, 3000);
+          }
+        })
+        .finally(() => {
+          this.isLoging = false;
         });
     },
   },
   mounted() {},
-  computed: {},
+  computed: {
+    checkingBtn() {
+      return this.isLoging
+        ? "<i class='spinner-border text-primary' role='status'></i> Signing in... "
+        : "Sign In";
+    },
+  },
 };
 </script>
 

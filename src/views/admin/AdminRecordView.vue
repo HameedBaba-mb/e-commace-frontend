@@ -36,6 +36,17 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr v-if="isLoadingAdmin" class="text-center">
+                    <td colspan="8">
+                      <div
+                        class="spinner-border text-primary"
+                        role="status"
+                      ></div>
+                    </td>
+                  </tr>
+                  <tr v-if="!isLoadingAdmin && allAdmins.length === 0">
+                    <td colspan="8" class="text-center">No admin found.</td>
+                  </tr>
                   <tr v-for="(admins, index) in allAdmins" :key="index">
                     <th scope="row">{{ index + 1 }}</th>
                     <td>{{ admins.first_name }}</td>
@@ -140,15 +151,20 @@ export default {
       allAdmins: [],
       deleteModalInstance: null,
       adminToDelete: {},
+      isLoadingAdmin: true,
     };
   },
   methods: {
     getAllAdmins() {
+      this.isLoadingAdmin = true;
       ApiServices.getAllAdmins()
         .then((response) => {
           this.allAdmins = response.data.data;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.isLoadingAdmin = false;
+        });
     },
     deleteAdmin(id) {
       ApiServices.deleteUser(id)

@@ -34,6 +34,17 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr v-if="isLoadingCategory" class="text-center">
+                    <td colspan="4">
+                      <div
+                        class="spinner-border text-primary"
+                        role="status"
+                      ></div>
+                    </td>
+                  </tr>
+                  <tr v-if="!isLoadingCategory && allCategiries.length === 0">
+                    <td colspan="4" class="text-center">No category found.</td>
+                  </tr>
                   <tr v-for="(category, index) in allCategiries" :key="index">
                     <th scope="row">{{ index + 1 }}</th>
                     <td>{{ category.title }}</td>
@@ -74,7 +85,6 @@
                   </tr>
                 </tbody>
               </table>
-
             </div>
           </div>
         </div>
@@ -137,15 +147,20 @@ export default {
       allCategiries: [],
       deleteModalInstance: null,
       categoryToDelete: {},
+      isLoadingCategory: false,
     };
   },
   methods: {
     getAllCategory() {
+      this.isLoadingCategory = true;
       ApiServices.getAllCategory()
         .then((response) => {
           this.allCategiries = response.data.data;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.isLoadingCategory = false;
+        });
     },
     deleteCategory(id) {
       ApiServices.deleteCategoryById(id)
