@@ -58,19 +58,6 @@
                   <vee-error-message name="description" class="text-danger" />
                 </div>
                 <div class="mb-3">
-                  <label for="slug" class="form-label">Slug</label>
-                  <vee-field
-                    type="email"
-                    class="form-control"
-                    id="slug"
-                    name="slug"
-                    aria-describedby="emailHelp"
-                    placeholder="SLug"
-                    v-model="allCategories.slug"
-                  />
-                  <vee-error-message name="slug" class="text-danger" />
-                </div>
-                <div class="mb-3">
                   <label for="category_image" class="form-label"
                     >Category Image</label
                   >
@@ -130,12 +117,7 @@ export default {
     });
 
     return {
-      // allCategories: {
-      //   title: "",
-      //   description: "",
-      //   category_image: "",
-      //   slug: "",
-      // },
+     
       allCategories: {},
       imagePreview: "",
       formValidation,
@@ -159,15 +141,17 @@ export default {
     //     });
     // },
     updateCategoryById() {
+      console.log(this.allCategories);
       const formData = new FormData();
       formData.append("title", this.allCategories.title);
       formData.append("description", this.allCategories.description);
-      formData.append("slug", this.allCategories.slug);
+      formData.append("category_image", this.allCategories.category_image);
+
 
       // only append category_image if it's a File (new image selected)
-      if (this.allCategories.category_image instanceof File) {
-        formData.append("category_image", this.allCategories.category_image);
-      }
+      // if (this.allCategories.category_image instanceof File) {
+      //   formData.append("category_image", this.allCategories.category_image);
+      // }
 
       ApiServices.updateCategoryById(this.categoryId, formData)
         .then((response) => {

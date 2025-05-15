@@ -2,16 +2,22 @@
   <aside class="left-sidebar">
     <!-- Sidebar scroll-->
     <div>
+<<<<<<< HEAD
       <div class="brand-logo d-flex align-items-center justify-content-center">
         <p class="fw-bold text-dark mb-0 d-none d-sm-block">
           Campus <span>Store</span>
+=======
+      <div class="brand-logo d-flex align-items-center justify-content-between">
+        <p class="fs-6 fw-bold text-dark mb-0 d-none d-sm-block">
+          Campus Store
+>>>>>>> 8f917aa942e9c6325b0439af4722a06a69d65f12
         </p>
         <div
           class="close-btn d-xl-none d-block sidebartoggler cursor-pointer"
           id="sidebarCollapse"
           @click="toggleSidebar"
         >
-          <i class="ti ti-x fs-8"></i>
+          <i class="fa fa-times-circle text-primary fs-8"></i>
         </div>
       </div>
       <!-- Sidebar navigation-->
@@ -94,16 +100,16 @@
             </router-link>
           </li>
           <li class="sidebar-item">
-            <router-link
-              class="sidebar-link"
-              :to="{ name: 'login' }"
+            <button
+              class="btn w-100 sidebar-link"
               aria-expanded="false"
+              @click="logOut"
             >
               <span>
                 <i class="fa fa-sign-out"></i>
               </span>
               <span class="hide-menu">Logout</span>
-            </router-link>
+            </button>
           </li>
         </ul>
       </nav>
@@ -115,10 +121,13 @@
 
 
 <script>
+import apiClient from '../../services/apiClient';
+
 export default {
   data() {
     return {
       isMiniSidebar: false,
+      authUser: JSON.parse(localStorage.getItem("e_commace_active_user")),
     };
   },
   methods: {
@@ -137,6 +146,15 @@ export default {
         "data-sidebartype",
         this.isMiniSidebar ? "mini-sidebar" : "full"
       );
+    },
+    async logOut() {
+      if (this.authUser) {
+        localStorage.removeItem("e_commace_active_user");
+
+        apiClient.defaults.headers.common["Authorization"] = "";
+
+        await this.$router.push({ name: "login" });
+      }
     },
   },
 };

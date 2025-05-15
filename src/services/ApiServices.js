@@ -40,7 +40,11 @@ export default {
     return apiClient.get("/get-category/" + id);
   },
   updateCategoryById(id, data) {
-    return apiClient.put("/update-category/" + id, data);
+    return apiClient.put("/update-category/" + id, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
   deleteCategoryById(id) {
     return apiClient.delete("/delete-category/" + id);
@@ -59,7 +63,11 @@ export default {
     return apiClient.get("/get-product/" + id);
   },
   updateProductById(id, data) {
-    return apiClient.put("/update-product/" + id, data);
+    return apiClient.put("/update-product/" + id, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
   deleteProductById(id) {
     return apiClient.delete("/delete-product/" + id);
@@ -79,6 +87,15 @@ export default {
   getClientRecentOrders(id) {
     return apiClient.get("/client-recent-orders/" + id);
   },
+  getAdminRecentOrders() {
+    return apiClient.get("/all-recent-orders");
+  },
+  getOrderPercentage() {  
+    return apiClient.get("/orders-percentages");
+  },
+  updateOrderStatus(id, data) {
+    return apiClient.put("/update-order/" + id, data);
+  },
 
   addToCart(data) {
     return apiClient.post("/register-cart", data);
@@ -94,7 +111,7 @@ export default {
     return apiClient.get("/client-orders/" + userId);
   },
 
-  deleteCart(id){
+  deleteCart(id) {
     return apiClient.delete("/delete-cart/" + id);
   },
 

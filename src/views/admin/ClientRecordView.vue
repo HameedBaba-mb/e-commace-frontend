@@ -22,61 +22,74 @@
               >
               <h5 class="card-title fw-semibold mb-4">Client Records</h5>
             </div>
-            <table class="table table-responsive">
-              <thead>
-                <tr>
-                  <th scope="col">SN</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Phone Number</th>
-                  <th scope="col">Role</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(admins, index) in allAdmins" :key="index">
-                  <th scope="row">{{ index + 1 }}</th>
-                  <td>{{ admins.first_name }}</td>
-                  <td>{{ admins.last_name }}</td>
-                  <td>{{ admins.email }}</td>
-                  <td>{{ admins.phone_no }}</td>
-                  <td class="text-capitalize">{{ admins.user_status }}</td>
-                  <td>
-                    <div class="dropdown ms-auto">
-                      <button
-                        class="btn btn-sm btn-primary dropdown-toggles border"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style="border-radius: 5px"
-                      >
-                        <i class="fa fa-ellipsis-h"></i>
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li>
-                          <router-link
-                            class="dropdown-item"
-                            :to="{
-                              name: 'update.client',
-                              params: { id: admins.id },
-                            }"
-                            >Update</router-link
-                          >
-                        </li>
-                        <li>
-                          <button
-                            class="dropdown-item"
-                            @click="getAdminToDelete(admins.id)"
-                          >
-                            Delete
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table text-nowrap align-middle mb-0">
+                <thead>
+                  <tr class="border-2 border-bottom border-primary border-0">
+                    <th scope="col">SN</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-if="isLoadingClient" class="text-center">
+                    <td colspan="8">
+                      <div
+                        class="spinner-border text-primary"
+                        role="status"
+                      ></div>
+                    </td>
+                  </tr>
+                  <tr v-if="!isLoadingClient && allClient.length === 0">
+                    <td colspan="8" class="text-center">No client found.</td>
+                  </tr>
+                  <tr v-for="(admins, index) in allClient" :key="index">
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td>{{ admins.first_name }}</td>
+                    <td>{{ admins.last_name }}</td>
+                    <td>{{ admins.email }}</td>
+                    <td>{{ admins.phone_no }}</td>
+                    <td class="text-capitalize">{{ admins.user_status }}</td>
+                    <td>
+                      <div class="dropdown ms-auto">
+                        <button
+                          class="btn btn-sm btn-primary dropdown-toggles border"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          style="border-radius: 5px"
+                        >
+                          <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <router-link
+                              class="dropdown-item"
+                              :to="{
+                                name: 'update.client',
+                                params: { id: admins.id },
+                              }"
+                              >Update</router-link
+                            >
+                          </li>
+                          <li>
+                            <button
+                              class="dropdown-item"
+                              @click="getAdminToDelete(admins.id)"
+                            >
+                              Delete
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -135,18 +148,23 @@ export default {
   },
   data() {
     return {
-      allAdmins: [],
+      allClient: [],
       deleteModalInstance: null,
       adminToDelete: {},
+      isLoadingClient: false,
     };
   },
   methods: {
     getAllClient() {
+      this.isLoadingClient = true;
       ApiServices.getAllClient()
         .then((response) => {
-          this.allAdmins = response.data.data;
+          this.allClient = response.data.data;
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.isLoadingClient = false;
+        });
     },
     deleteAdmin(id) {
       ApiServices.deleteUser(id)
@@ -170,7 +188,7 @@ export default {
     },
 
     getAdminToDelete(id) {
-      this.adminToDelete = this.allAdmins.find((admin) => admin.id === id);
+      this.adminToDelete = this.allClient.find((admin) => admin.id === id);
       if (id) {
         this.openDeleteModal();
       }

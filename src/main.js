@@ -14,6 +14,12 @@ import "./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js";
 import $ from "jquery";
 window.$ = window.jQuery = $;
 
+<<<<<<< HEAD
+=======
+import "./assets/libs/jquery/dist/jquery.min.js";
+import "./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js";
+import "./assets/js/sidebarmenu.js";
+>>>>>>> 8f917aa942e9c6325b0439af4722a06a69d65f12
 
 import axios from "axios";
 window.axios = axios;

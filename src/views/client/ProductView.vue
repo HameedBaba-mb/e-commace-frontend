@@ -9,34 +9,7 @@
       </template>
     </dashboard-banner>
 
-    <div class="container-lg">
-      <div class="card">
-        <div class="card-body client-border">
-          <div class="row">
-            <div
-              class="col-lg-3 col-md-4 col-sm-6"
-              v-for="(product, index) in allProdcuts"
-              :key="index"
-            >
-              <CategoryCard
-                :description="product.description"
-                :title="product.title"
-                :img="product.imageUrl"
-              >
-                <template #card-content>
-                  <button
-                    @click="addToCart(this.userId, product.id)"
-                    class="btn btn-sm btn-dark py-2 fw-semibold"
-                  >
-                    Add to Cart
-                  </button>
-                </template>
-              </CategoryCard>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+   
 
     <div class="container-lg">
       <div class="card">

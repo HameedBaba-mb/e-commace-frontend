@@ -9,11 +9,21 @@
     </dashboard-banner>
 
     <div class="container-lg">
+<<<<<<< HEAD
       <div class="categories-container">
         <!-- Loading Spinner -->
         <div v-if="isLoading" class="loading-spinner">
           <i class="fa fa-spinner fa-spin fa-2x"></i>
         </div>
+=======
+      <div class="card">
+        <div class="card-body client-border">
+          <div class="row">
+            <!-- Loading Spinner -->
+            <div v-if="isLoading" class="text-center">
+              <i class="spinner-border text-primary" role="status"></i>
+            </div>
+>>>>>>> 8f917aa942e9c6325b0439af4722a06a69d65f12
 
         <!-- No Categories Found -->
         <div v-else-if="allCategiries.length === 0" class="empty-state">
@@ -33,6 +43,7 @@
               :img="category.imageUrl"
               :prodId="category.id"
             >
+<<<<<<< HEAD
               <template #card-content>
                 <router-link
                   class="view-products-btn"
@@ -45,6 +56,29 @@
                 </router-link>
               </template>
             </CategoryCard>
+=======
+              <CategoryCard
+                :description="category.description"
+                :title="category.title"
+                :img="category.imageUrl"
+                :prodId="category.id"
+                :isLoadingImg="isLoadingImg"
+              >
+                <template #card-content>
+                  <router-link
+                    class="btn btn-primary py-2 fw-semibold"
+                    style="border-radius: 5px"
+                    :to="{
+                      name: 'client.categories.products',
+                      params: { id: category.id },
+                    }"
+                  >
+                    View Product
+                  </router-link>
+                </template>
+              </CategoryCard>
+            </div>
+>>>>>>> 8f917aa942e9c6325b0439af4722a06a69d65f12
           </div>
         </div>
       </div>
@@ -66,6 +100,7 @@ export default {
     return {
       allCategiries: [],
       isLoading: false,
+      isLoadingImg: false,
     };
   },
   methods: {
@@ -97,6 +132,79 @@ export default {
           this.isLoading = false;
         });
     },
+<<<<<<< HEAD
+=======
+
+    // getAllCategory() {
+    //   this.isLoading = true;
+
+    //   ApiServices.getAllCategory()
+    //     .then((response) => {
+    //       const categories = response.data.data;
+
+    //       const imageFetchPromises = categories.map((category) => {
+    //         return ApiServices.getCatetoryImage(category.category_image)
+    //           .then((imageResponse) => {
+    //             const blob = new Blob([imageResponse.data], {
+    //               type: imageResponse.headers["content-type"],
+    //             });
+    //             category.imageUrl = URL.createObjectURL(blob);
+    //             return category;
+    //           })
+    //           .catch(() => {
+    //             category.imageUrl = null;
+    //             return category;
+    //           });
+    //       });
+
+    //       return Promise.all(imageFetchPromises);
+    //     })
+    //     .then((categoriesWithImages) => {
+    //       this.allCategiries = categoriesWithImages;
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     })
+    //     .finally(() => {
+    //       this.isLoading = false;
+    //     });
+    // },
+    loadImage(event) {
+      document.getElementById("category_image").click();
+    },
+
+    updatePreview(e) {
+      const files = e.target.files;
+      if (!files.length) return;
+
+      this.allCategories.category_image = files[0]; // Important: this is the actual File object
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        this.imagePreview = event.target.result;
+      };
+      reader.readAsDataURL(files[0]);
+    },
+    getCatetoryImage(image_name) {
+      this.isLoadingImg = true;
+      ApiServices.getCatetoryImage(image_name, {
+        responseType: "blob",
+      })
+        .then((response) => {
+          // this.imagePreview = response.data;
+          const blob = new Blob([response.data], {
+            type: response.headers["content-type"],
+          });
+          this.imagePreview = URL.createObjectURL(blob);
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          this.isLoadingImg = false;
+        });
+    },
+>>>>>>> 8f917aa942e9c6325b0439af4722a06a69d65f12
   },
   mounted() {
     this.getAllCategory();

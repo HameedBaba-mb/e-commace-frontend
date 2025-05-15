@@ -36,6 +36,7 @@
       </template>
     </dashboard-banner>
 
+<<<<<<< HEAD
     <!-- Recent Orders Table -->
     <div class="dashboard-content">
       <div class="recent-orders-card">
@@ -72,6 +73,90 @@
               </tr>
             </tbody>
           </table>
+=======
+    <div class="container-lg mt-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-body client-border">
+            <h1 class="fs-7">Recent 5 Orders</h1>
+            <!-- <hr /> -->
+            <div class="table-responsive">
+              <table class="table text-nowrap align-middle mb-0">
+                <thead>
+                  <tr class="border-2 border-bottom border-primary border-0">
+                    <th scope="col">#</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Item Quentity</th>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Order Status</th>
+                    <th scope="col">Payment Status</th>
+                    <th scope="col">Order Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-if="isLoadingOrders" class="text-center">
+                    <td colspan="7">
+                      <div
+                        class="spinner-border text-primary"
+                        role="status"
+                      ></div>
+                    </td>
+                  </tr>
+                  <tr v-if="!isLoadingOrders && recentOrders.length === 0">
+                    <td colspan="4" class="text-center">
+                      No recent orders found.
+                    </td>
+                  </tr>
+
+                  <tr v-for="(order, index) in recentOrders" :key="index">
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td>{{ order.Product?.title }}</td>
+                    <td>{{ order.item_quentity }}</td>
+                    <td>{{ order.total_amount }}</td>
+                    <td>
+                      <!-- {{ order.order_status }} -->
+                      <p
+                        class="transaction-status w-50"
+                        :style="{
+                          color: setOrderStatusColor(order.order_status).color,
+                          backgroundColor: setOrderStatusColor(
+                            order.order_status
+                          ).backgroundColor,
+                          border: setOrderStatusColor(order.order_status)
+                            .border,
+                        }"
+                      >
+                        {{ order.order_status }}
+                      </p>
+                    </td>
+                    <td class="">
+                      <!-- {{ order.order_status }} -->
+                      <p
+                        class="transaction-status w-50"
+                        :style="{
+                          color: setPaymentStatusColor(order.payment_status)
+                            .color,
+                          backgroundColor: setPaymentStatusColor(
+                            order.payment_status
+                          ).backgroundColor,
+                          border: setPaymentStatusColor(order.payment_status)
+                            .border,
+                        }"
+                      >
+                        {{ order.payment_status }}
+                      </p>
+                    </td>
+                    <td>
+                      {{
+                        order.createdAt ? order.createdAt.substring(0, 10) : ""
+                      }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+>>>>>>> 8f917aa942e9c6325b0439af4722a06a69d65f12
         </div>
       </div>
     </div>
@@ -94,6 +179,10 @@ export default {
   },
   data() {
     return {
+<<<<<<< HEAD
+=======
+      isLoadingOrders: false,
+>>>>>>> 8f917aa942e9c6325b0439af4722a06a69d65f12
       recentOrders: [],
       orderStats: {
         totalOrders: 0,
@@ -113,11 +202,77 @@ export default {
         .catch(console.error);
     },
     getClientRecentOrders() {
+      this.isLoadingOrders = true;
       ApiServices.getClientRecentOrders(this.userId)
         .then((response) => {
           this.recentOrders = response.data.data;
         })
+<<<<<<< HEAD
         .catch(console.error);
+=======
+        .catch((error) => {
+          console.error("Error fetching categories:", error);
+        })
+        .finally(() => {
+          this.isLoadingOrders = false;
+        });
+    },
+    setOrderStatusColor(status) {
+      switch (status) {
+        case "cancelled":
+          return {
+            backgroundColor: "#FEE4E2",
+            color: "#F04438",
+            border: "1px solid #F04438",
+          };
+        case "delivered":
+          return {
+            backgroundColor: "#DCFAE6",
+            color: "#067647",
+            border: "1px solid #067647",
+          };
+        case "pending":
+          return {
+            backgroundColor: "#FEF0C7",
+            color: "#DC6803",
+            border: "1px solid #DC6803",
+          };
+        default:
+          return {
+            backgroundColor: "#f4f4f4",
+            color: "#23383f",
+            border: "1px solid #23383f",
+          };
+      }
+    },
+    setPaymentStatusColor(status) {
+      switch (status) {
+        case "unpaid":
+          return {
+            backgroundColor: "#FEE4E2",
+            color: "#F04438",
+            border: "1px solid #F04438",
+          };
+        case "paid":
+          return {
+            backgroundColor: "#DCFAE6",
+            color: "#067647",
+            border: "1px solid #067647",
+          };
+        case "partial payment":
+          return {
+            backgroundColor: "#FEF0C7",
+            color: "#DC6803",
+            border: "1px solid #DC6803",
+          };
+        default:
+          return {
+            backgroundColor: "#f4f4f4",
+            color: "#23383f",
+            border: "1px solid #23383f",
+          };
+      }
+>>>>>>> 8f917aa942e9c6325b0439af4722a06a69d65f12
     },
     formatDate(dateString) {
       return new Date(dateString).toLocaleDateString('en-US', {
@@ -203,12 +358,26 @@ export default {
 };
 </script>
 
+<<<<<<< HEAD
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 .dashboard-wrapper {
   font-family: 'Poppins', sans-serif;
   padding: 0;
+=======
+<style lang="css" scoped>
+@import url("../../assets/css/client-style.css");
+.transaction-status {
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 12px;
+  text-transform: capitalize;
+  font-weight: 600;
+  text-align: center;
+  width: 100% !important;
+  margin: 0 auto;
+>>>>>>> 8f917aa942e9c6325b0439af4722a06a69d65f12
 }
 
 .welcome-text {
