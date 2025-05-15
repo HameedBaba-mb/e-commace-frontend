@@ -18,9 +18,9 @@
             <div class="card mb-0">
               <div class="card-body">
                 <p
-                  class="text-center m mb-3 fs-6 fw-bold text-dark mb-0 d-none d-sm-block"
+                  class="text-center m mb-3 fw-bold text-dark mb-0 d-none d-sm-block"
                 >
-                  Campus Store
+                  Campus <span>Store</span>
                 </p>
                 <p class="text-center">Register new account</p>
                 <vee-form
@@ -215,9 +215,173 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-input::placeholder {
-  font-size: 10px;
-  color: var(--primary);
+<style lang="scss" scoped>
+/* ========== IMPORT FONTS ========== */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;500;600&display=swap');
+
+/* ========== COLOR PALETTE ========== */
+$primary-color: #374151;       // Dark gray-blue
+$secondary-color: #6B7280;     // Medium gray
+$accent-color: #4F46E5;        // Vibrant purple
+$light-bg: #F9FAFB;            // Light background
+$text-color: #111827;          // Dark text
+$light-text: #6B7280;          // Light text
+
+/* ========== BASE STYLES ========== */
+.page-wrapper {
+  position: relative;
+  min-height: 100vh;
+  background-color: $light-bg;
+  font-family: 'Poppins', sans-serif;
+}
+
+// .position-relative {
+//   position: relative;
+// }
+
+.radial-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+  background-size: cover;
+  background-position: center;
+  // opacity: 0.15;
+  z-index: 0;
+  filter: grayscale(50%) brightness(1.1);
+}
+
+
+.card {
+  background: white; 
+  border: 1px solid #e5e7eb; /* Solid border instead */
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.6s ease-out forwards;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== CARD CONTENT ========== */
+.card-body {
+  padding: 2.5rem;
+}
+
+.text-center.m {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem;
+  color: $primary-color;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+
+  span {
+    color: $accent-color;
+  }
+}
+
+.text-center {
+  color: $secondary-color;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+/* ========== FORM ELEMENTS ========== */
+.form-label {
+  color: $text-color;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  background: white; /* Changed from semi-transparent to solid */
+  border: 1px solid #e5e7eb;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: $accent-color;
+    box-shadow: 0 0 0 3px rgba($accent-color, 0.1);
+    background: white;
+  }
+}
+
+/* ========== BUTTON STYLES ========== */
+.btn-primary {
+  background: $primary-color;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-weight: 500;
+  color: white;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: darken($primary-color, 5%);
+    transform: translateY(-2px);
+  }
+}
+
+/* ========== LINK STYLES ========== */
+.d-flex.align-items-center {
+  color: $secondary-color;
+  font-size: 0.9rem;
+
+  .text-primary {
+    color: $accent-color !important;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    margin-left: 0.25rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* ========== ERROR MESSAGES ========== */
+.text-danger {
+  color: #EF4444;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+/* ========== RESPONSIVE ADJUSTMENTS ========== */
+@media (max-width: 768px) {
+  .card-body {
+    padding: 2rem;
+  }
+  
+  .text-center.m {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .col-lg-6, .col-md-6, .col-xxl-6 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 }
 </style>

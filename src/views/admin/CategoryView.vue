@@ -181,4 +181,101 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-wrapper {
+  background-color: #f7fafc; // Light background for the page
+  padding-top: 4rem; // Space out the top
+}
+
+.card {
+  border: 1px solid #e5e7eb; // Light border around the card
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.table {
+  margin-top: 2rem;
+  font-size: 0.875rem;
+  color: #3c4b64;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f3f4f6; // Light background for headers
+  color: #6b7280; // Text color for headers
+}
+
+.table tbody tr:hover {
+  background-color: #f9fafb; // Highlight row on hover
+  cursor: pointer;
+}
+
+.table .btn {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+
+.btn-primary {
+  background-color: #1f2937;
+  border-color: #1f2937;
+}
+
+.btn-primary:hover {
+  background-color: #374151;
+  border-color: #374151;
+}
+
+.dropdown-menu {
+  min-width: 180px;
+}
+
+.modal-content {
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.modal-header {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-body {
+  padding: 1rem;
+  text-align: center;
+}
+
+.modal-footer button {
+  border-radius: 6px;
+}
+
+.alert-danger {
+  color: #dc2626;
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.dropdown-item {
+  font-size: 0.9rem;
+}
+
 </style>

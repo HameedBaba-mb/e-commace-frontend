@@ -4,7 +4,7 @@
     <dashboard-banner>
       <template #banner-body>
         <div class="container-lg text-centers mt-2">
-          <h1 class="display-1">My Carts</h1>
+          <h1 class="display-1">My Cart</h1>
         </div>
       </template>
     </dashboard-banner>
@@ -268,7 +268,7 @@ export default {
 };
 </script>
   
-  <style lang="css" scoped>
+  <!-- <style lang="css" scoped>
 @import url("../../assets/css/client-style.css");
 .display-1 {
   /* font-size: 2.5rem; */
@@ -282,5 +282,185 @@ export default {
 .p-value {
   font-size: 20px;
   color: #000;
+}
+</style> -->
+
+
+<style lang="css" scoped>
+/* Main Layout & Containers */
+.page-wrapper {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.container-lg {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Banner Styling */
+.text-centers {
+  text-align: center;
+}
+
+.display-1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Card & Table Styling */
+.client-boder {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  background: #fff;
+}
+
+.card-body h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  padding: 12px 15px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table td {
+  padding: 12px 15px;
+  vertical-align: middle;
+  border-bottom: 1px solid #eee;
+}
+
+.table tr:hover td {
+  background-color: #f8f9fa;
+}
+
+/* Dropdown Button */
+.dropdown-toggles {
+  padding: 5px 10px;
+  background-color: #4e73df;
+  transition: all 0.2s;
+}
+
+.dropdown-toggles:hover {
+  background-color: #3a5ccc;
+}
+
+.dropdown-menu {
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  cursor: pointer;
+  padding: 8px 15px;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Modal Styling */
+.modal-content {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  border-bottom: 1px solid #eee;
+  padding: 15px 20px;
+}
+
+.modal-title {
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  border-top: 1px solid #eee;
+  padding: 15px 20px;
+}
+
+/* Form & Input Styling */
+.form-control {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px 15px;
+  transition: border 0.3s;
+}
+
+.form-control:focus {
+  border-color: #4e73df;
+  box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Utility Classes */
+.p-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.p-value {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.text-danger {
+  color: #e74a3b !important;
+}
+
+.btn-primary {
+  background-color: #4e73df;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #3a5ccc;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .display-1 {
+    font-size: 2rem;
+  }
+
+  .table th, .table td {
+    padding: 8px 10px;
+  }
+
+  .modal-body {
+    padding: 15px;
+  }
 }
 </style>

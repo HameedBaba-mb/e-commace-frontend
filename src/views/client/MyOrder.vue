@@ -175,7 +175,7 @@ export default {
 };
 </script>
   
-  <style lang="css" scoped>
+  <!-- <style lang="css" scoped>
 @import url("../../assets/css/client-style.css");
 .display-1 {
   /* font-size: 2.5rem; */
@@ -189,5 +189,109 @@ export default {
   text-transform: capitalize;
   font-weight: 600;
   text-align: center;
+}
+</style> -->
+
+
+<style lang="css" scoped>
+/* ===== Main Layout ===== */
+.page-wrapper {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.container-lg {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* ===== Banner ===== */
+.text-centers {
+  text-align: center;
+}
+
+.display-1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Card & Table ===== */
+.client-boder {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  background: #fff;
+}
+
+.card-body h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  padding: 12px 15px;
+  border-bottom: 2px solid #dee2e6;
+  color: #555;
+}
+
+.table td {
+  padding: 12px 15px;
+  vertical-align: middle;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.table tr:hover td {
+  background-color: #f8f9fa;
+}
+
+/* ===== Status Badges ===== */
+.transaction-status {
+  padding: 6px 10px;
+  border-radius: 20px; /* Pill shape */
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  text-align: center;
+  display: inline-block;
+  min-width: 100px; /* Fixed width for consistency */
+}
+
+/* ===== Date Formatting ===== */
+td:last-child {
+  font-family: monospace; /* Monospace for dates */
+  color: #666;
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 768px) {
+  .display-1 {
+    font-size: 2rem;
+  }
+
+  .table {
+    display: block;
+    overflow-x: auto; /* Horizontal scroll for small screens */
+  }
+
+  .transaction-status {
+    min-width: 80px;
+    font-size: 11px;
+    padding: 4px 8px;
+  }
 }
 </style>

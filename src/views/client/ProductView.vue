@@ -214,11 +214,144 @@ export default {
 };
 </script>
     
-    <style lang="css" scoped>
+    <!-- <style lang="css" scoped>
 @import url("../../assets/css/client-style.css");
 .display-1 {
   /* font-size: 2.5rem; */
   font-weight: 700;
   color: #fff;
+}
+</style> -->
+
+<style lang="css" scoped>
+/* ===== Main Layout ===== */
+.page-wrapper {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
+
+.container-lg {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* ===== Banner ===== */
+.text-centers {
+  text-align: center;
+}
+
+.display-1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 0;
+}
+
+/* ===== Card Container ===== */
+.client-border {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  padding: 1.5rem;
+}
+
+/* ===== Product Grid ===== */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -0.75rem; /* Negative margin to counteract column padding */
+}
+
+.col-lg-3,
+.col-md-4,
+.col-sm-6 {
+  padding: 0.75rem; /* Consistent gutter spacing */
+  transition: transform 0.2s ease;
+}
+
+/* ===== Loading State ===== */
+.text-center {
+  width: 100%;
+  padding: 2rem;
+}
+
+.fa-spinner {
+  color: #4e73df;
+}
+
+/* ===== Empty State ===== */
+.text-center p {
+  color: #6c757d;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+/* ===== Add to Cart Button ===== */
+.btn-dark {
+  background-color: #343a40;
+  border: none;
+  width: 100%;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+
+.btn-dark:hover {
+  background-color: #23272b;
+  transform: translateY(-2px);
+}
+
+.btn-dark:active {
+  transform: translateY(0);
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 992px) {
+  .col-lg-3 {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+  }
+}
+
+@media (max-width: 768px) {
+  .display-1 {
+    font-size: 2rem;
+  }
+
+  .col-md-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .col-sm-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .client-border {
+    padding: 1rem;
+  }
+}
+
+/* ===== Animation for Loading ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.row > * {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* ===== Hover Effects for Product Cards ===== */
+.col-lg-3:hover,
+.col-md-4:hover,
+.col-sm-6:hover {
+  transform: translateY(-5px);
 }
 </style>

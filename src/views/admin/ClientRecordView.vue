@@ -182,5 +182,195 @@ export default {
 };
 </script>
   
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
+.page-wrapper {
+  background-color: #f8f9fc; /* Light background color */
+  padding-top: 4rem; // Space out the top
+}
+
+.card {
+  border-radius: 10px;
+  border: none;
+  box-shadow:0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color:  #333; /* Darker text for titles */
+  font-weight: 600;
+}
+
+.table {
+  margin-top: 2rem;
+  font-size: 0.875rem;
+  color: #3c4b64;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+// .table th {
+//   background-color: #e9f1ff; /* Light blue background */
+//   color: #3c4b64; /* Darker text for the headers */
+// }
+
+// .table td {
+//   background-color: #ffffff;
+// }
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.table tbody tr:hover {
+  background-color: #f9fafb; // Highlight row on hover
+  cursor: pointer;
+}
+
+.table th {
+  background-color: #f3f4f6; // Light background for headers
+  color: #6b7280; // Text color for headers
+}
+.btn-primary {
+  background-color: #1f2937;
+  border-color: #1f2937;
+}
+
+.btn-primary:hover {
+  background-color: #374151;
+  border-color: #374151;
+}
+
+.dropdown-menu {
+  min-width: 180px;
+}
+
+.modal-content {
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.modal-header {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-body {
+  padding: 1rem;
+  text-align: center;
+}
+
+.modal-footer button {
+  border-radius: 6px;
+}
+
+.alert-danger {
+  color: #dc2626;
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.dropdown-item {
+  font-size: 0.9rem;
+}
+
+
+
+// .table .dropdown-menu {
+//   min-width: 8rem;
+// }
+
+// .table .dropdown-item {
+//   cursor: pointer;
+//   color: #4b87c1; /* Blue color for actions */
+// }
+
+// .table .dropdown-item:hover {
+//   background-color: #e9f1ff; /* Light blue hover effect */
+// }
+
+// .dropdown-toggles {
+//   background-color: #4b87c1; /* Blue button background */
+//   color: #ffffff;
+//   border-radius: 5px;
+// }
+
+// .dropdown-toggles:hover {
+//   background-color: #3a5f94; /* Darker blue on hover */
+// }
+
+// .modal-content {
+//   border-radius: 8px;
+// }
+
+// .modal-header {
+//   background-color: #4b87c1; /* Matching blue */
+//   color: #ffffff;
+//   border-bottom: 1px solid #4b87c1;
+// }
+
+// .modal-title {
+//   font-size: 1.25rem;
+// }
+
+// .modal-body p {
+//   font-size: 1rem;
+//   color: #495057;
+// }
+
+// .btn-close {
+//   background-color: #4b87c1;
+//   color: #ffffff;
+//   border: none;
+//   border-radius: 50%;
+// }
+
+// .btn-close:hover {
+//   background-color: #3a5f94;
+// }
+
+// .btn-primary {
+//   background-color: #1f2937;
+//   border-color: #1f2937;
+// }
+
+// .btn-primary:hover {
+//   background-color: #374151;
+//   border-color: #374151;
+// }
+
+// .btn-danger {
+//   background-color: #f44336; /* Red color for danger button */
+//   border-color: #f44336;
+// }
+
+// .btn-danger:hover {
+//   background-color: #e53935;
+// }
+
+// .btn-primary, .btn-danger {
+//   border-radius: 5px;
+// }
+
+// .alert-danger {
+//   color: #721c24;
+//   background-color: #f8d7da;
+//   border-color: #f5c6cb;
+//   font-size: 1rem;
+// }
+
+// .fw-bold {
+//   font-weight: 700;
+// }
+
+// .text-capitalize {
+//   text-transform: capitalize;
+// }
 </style>

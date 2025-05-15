@@ -8,12 +8,12 @@ import "./assets/css/styles.min.css";
 // main.js or main.ts
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
+import "./assets/libs/jquery/dist/jquery.min.js";
+import "./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import $ from "jquery";
 window.$ = window.jQuery = $;
 
-import "./assets/libs/jquery/dist/jquery.min.js";
-import "./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import axios from "axios";
 window.axios = axios;

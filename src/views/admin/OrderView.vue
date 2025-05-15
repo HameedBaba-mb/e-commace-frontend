@@ -185,4 +185,208 @@
   </script>
       
       <style lang="scss" scoped>
-  </style>
+/* ===== Base Layout ===== */
+.page-wrapper {
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+.body-wrapper {
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.container-fluid {
+  padding: 0;
+}
+
+/* ===== Card Styling ===== */
+.card {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  background-color: #ffffff;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== Table Styling ===== */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  thead {
+    background-color: #f1f5f9;
+
+    th {
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid #e2e8f0;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: #f8fafc;
+      }
+
+      td {
+        padding: 0.75rem 1rem;
+        color: #334155;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      &:last-child td {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+/* ===== Status Badges ===== */
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+
+  &.pending {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  &.completed {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+
+  &.cancelled {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+}
+
+/* ===== Modal Styling ===== */
+.modal-content {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1rem 1.5rem;
+
+  .modal-title {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 1.125rem;
+  }
+}
+
+.modal-body {
+  padding: 1.5rem;
+
+  .alert-danger {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    font-weight: 500;
+  }
+
+  .fw-bold {
+    margin: 1rem 0;
+    color: #1e293b;
+  }
+}
+
+.modal-footer {
+  border-top: 1px solid #e2e8f0;
+  padding: 1rem 1.5rem;
+}
+
+.btn {
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  transition: all 0.15s ease;
+
+  &-primary {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+
+    &:hover {
+      background-color: #2563eb;
+      border-color: #2563eb;
+    }
+  }
+
+  &-danger {
+    background-color: #ef4444;
+    border-color: #ef4444;
+
+    &:hover {
+      background-color: #dc2626;
+      border-color: #dc2626;
+    }
+  }
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 768px) {
+  .body-wrapper {
+    padding: 1rem;
+  }
+
+  .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 2px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .card-body {
+    padding: 1rem;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+}
+</style>
+     
