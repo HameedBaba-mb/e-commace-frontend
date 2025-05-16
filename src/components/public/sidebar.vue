@@ -2,15 +2,9 @@
   <aside class="left-sidebar">
     <!-- Sidebar scroll-->
     <div>
-<<<<<<< HEAD
-      <div class="brand-logo d-flex align-items-center justify-content-center">
-        <p class="fw-bold text-dark mb-0 d-none d-sm-block">
-          Campus <span>Store</span>
-=======
       <div class="brand-logo d-flex align-items-center justify-content-between">
         <p class="fs-6 fw-bold text-dark mb-0 d-none d-sm-block">
           Campus Store
->>>>>>> 8f917aa942e9c6325b0439af4722a06a69d65f12
         </p>
         <div
           class="close-btn d-xl-none d-block sidebartoggler cursor-pointer"
