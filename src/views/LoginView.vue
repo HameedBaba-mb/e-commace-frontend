@@ -88,6 +88,7 @@ export default {
               "e_commace_active_user",
               JSON.stringify(response.data.data)
             );
+            console.log(response.data.data);
             this.$refs.notify.showMessage(
               "Success",
               "You have successfully logged in.",
